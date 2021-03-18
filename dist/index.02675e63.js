@@ -26693,7 +26693,7 @@ try {
       key: "componentDidMount",
       value: function componentDidMount() {
         var _this2 = this;
-        _axios["default"].get('https://kumi-movie-index.herokuapp.com/movies').then(function (response) {
+        _axios["default"].get("https://kumi-movie-index.herokuapp.com/movies").then(function (response) {
           _this2.setState({
             movies: response.data
           });
@@ -26723,7 +26723,12 @@ try {
           /*#__PURE__*/_react["default"].createElement("div", {
             className: "main-view"
           }, selectedMovie ? /*#__PURE__*/_react["default"].createElement(_movieView.MovieView, {
-            movie: selectedMovie
+            movie: selectedMovie,
+            removeSelectedMovie: function removeSelectedMovie() {
+              return _this3.setState({
+                selectedMovie: null
+              });
+            }
           }) : movies.map(function (movie) {
             return (
               /*#__PURE__*/_react["default"].createElement(_movieCard.MovieCard, {
@@ -28914,7 +28919,8 @@ try {
     _createClass(MovieView, [{
       key: "render",
       value: function render() {
-        var movie = this.props.movie;
+        var _this$props = this.props, movie = _this$props.movie, removeSelectedMovie = _this$props.removeSelectedMovie;
+        console.log(movie);
         if (!movie) return null;
         return (
           /*#__PURE__*/_react["default"].createElement("div", {
@@ -28947,17 +28953,7 @@ try {
           }, "Director: "), /*#__PURE__*/_react["default"].createElement("span", {
             className: "value"
           }, movie.Director.Name)), /*#__PURE__*/_react["default"].createElement("button", {
-            onClick: (function (_onClick) {
-              function onClick() {
-                return _onClick.apply(this, arguments);
-              }
-              onClick.toString = function () {
-                return _onClick.toString();
-              };
-              return onClick;
-            })(function () {
-              return onClick();
-            })
+            onClick: removeSelectedMovie
           }, "Back"))
         );
       }
