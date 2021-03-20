@@ -7,6 +7,7 @@ export class MovieView extends React.Component {
     this.state = {};
   }
 
+  
   render() {
     const { movie, removeSelectedMovie } = this.props;
     console.log(movie)

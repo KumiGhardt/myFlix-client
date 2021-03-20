@@ -7,7 +7,6 @@ import { MovieView } from "../movie-view/movie-view";
 export default class MainView extends React.Component {
   constructor() {
     super();
-
     this.state = {
       movies: null,
       selectedMovie: null,

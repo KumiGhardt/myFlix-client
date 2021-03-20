@@ -26752,7 +26752,7 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","axios":"7rA65","../movie-card/movie-card":"7v6h3","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","../movie-view/movie-view":"3xBbr"}],"7rA65":[function(require,module,exports) {
+},{"react":"3b2NM","axios":"7rA65","../movie-card/movie-card":"7v6h3","../movie-view/movie-view":"3xBbr","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl"}],"7rA65":[function(require,module,exports) {
 module.exports = require('./lib/axios');
 },{"./lib/axios":"4qfhW"}],"4qfhW":[function(require,module,exports) {
 'use strict';
@@ -28608,6 +28608,7 @@ try {
     };
     return _getPrototypeOf(o);
   }
+  // the MovieCard component (child component) is responsible for listening for click events on the SingleMovie view and transmitting this as props to MainView (parent component)
   var MovieCard = /*#__PURE__*/(function (_React$Component) {
     _inherits(MovieCard, _React$Component);
     var _super = _createSuper(MovieCard);
