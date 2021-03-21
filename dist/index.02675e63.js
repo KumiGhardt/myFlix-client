@@ -26679,10 +26679,10 @@ try {
   var MainView = /*#__PURE__*/(function (_React$Component) {
     _inherits(MainView, _React$Component);
     var _super = _createSuper(MainView);
-    function MainView() {
+    function MainView(props) {
       var _this;
       _classCallCheck(this, MainView);
-      _this = _super.call(this);
+      _this = _super.call(this, props);
       _this.state = {
         movies: null,
         selectedMovie: null
@@ -26729,7 +26729,8 @@ try {
                 selectedMovie: null
               });
             }
-          }) : movies.map(function (movie) {
+          }) : // pass the properties(props) to the MovieCard component of an individual movie:
+          movies.map(function (movie) {
             return (
               /*#__PURE__*/_react["default"].createElement(_movieCard.MovieCard, {
                 key: movie._id,
@@ -28621,7 +28622,24 @@ try {
       value: function render() {
         var _this$props = this.props, movie = _this$props.movie, _onClick = _this$props.onClick;
         return (
-          /*#__PURE__*/_react["default"].createElement("div", {
+          /*#__PURE__*/
+          /*
+          <Card Style={{ width: '22rem' }} className='movie-card'>
+          <Card.Img variant='top' src={movie.ImagePath} />
+          <Card.Body>
+          <Card.Title>{movie.Title + ' - ' + movie.Released}</Card.Title>
+          <Card.Text>{movie.Description}</Card.Text>
+          <button
+          onClick={() => onClick(movie)}
+          variant='link'
+          className="expand-movie"
+          >
+          Details
+          </button>
+          </Card.Body>
+          </Card>
+          */
+          _react["default"].createElement("div", {
             onClick: function onClick() {
               return _onClick(movie);
             },
