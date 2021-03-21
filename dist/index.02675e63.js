@@ -26588,6 +26588,7 @@ try {
   exports["default"] = void 0;
   var _react = _interopRequireDefault(require("react"));
   var _axios = _interopRequireDefault(require("axios"));
+  var _loginView = require("../login-view/login-view");
   var _movieCard = require("../movie-card/movie-card");
   var _movieView = require("../movie-view/movie-view");
   function _interopRequireDefault(obj) {
@@ -26683,9 +26684,11 @@ try {
       var _this;
       _classCallCheck(this, MainView);
       _this = _super.call(this, props);
+      // Initial state is set to null
       _this.state = {
         movies: null,
-        selectedMovie: null
+        selectedMovie: null,
+        user: null
       };
       return _this;
     }
@@ -26703,9 +26706,18 @@ try {
       }
     }, {
       key: "onMovieClick",
-      value: function onMovieClick(movie) {
+      value: /*When a movie is clicked, this function is invoked and updates the state of the `selectedMovie` *property to that movie*/
+      function onMovieClick(movie) {
         this.setState({
           selectedMovie: movie
+        });
+      }
+    }, {
+      key: "onLoggedIn",
+      value: /*When a user successfully logs in, this function updates the `user` property in state to that *particular user*/
+      function onLoggedIn(user) {
+        this.setState({
+          user: user
         });
       }
     }, {
@@ -26713,6 +26725,14 @@ try {
       value: function render() {
         var _this3 = this;
         var _this$state = this.state, movies = _this$state.movies, selectedMovie = _this$state.selectedMovie;
+        /*If there is no user, the LoginView is rendered. If there is a user logged in, the user details are *passed as a prop to the LoginView*/
+        if (!user) return (
+          /*#__PURE__*/_react["default"].createElement(_loginView.LoginView, {
+            onLoggedIn: function onLoggedIn(user) {
+              return _this3.onLoggedIn(user);
+            }
+          })
+        );
         // Before the movies have been loaded
         if (!movies) return (
           /*#__PURE__*/_react["default"].createElement("div", {
@@ -26753,7 +26773,7 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","axios":"7rA65","../movie-card/movie-card":"7v6h3","../movie-view/movie-view":"3xBbr","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl"}],"7rA65":[function(require,module,exports) {
+},{"react":"3b2NM","axios":"7rA65","../movie-card/movie-card":"7v6h3","../movie-view/movie-view":"3xBbr","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","../login-view/login-view":"6M7fu"}],"7rA65":[function(require,module,exports) {
 module.exports = require('./lib/axios');
 },{"./lib/axios":"4qfhW"}],"4qfhW":[function(require,module,exports) {
 'use strict';
@@ -28980,6 +29000,159 @@ try {
     return MovieView;
   })(_react["default"].Component);
   exports.MovieView = MovieView;
+  helpers.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+
+},{"react":"3b2NM","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl"}],"6M7fu":[function(require,module,exports) {
+"use strict";
+var helpers = require("../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+helpers.prelude(module);
+try {
+  function _typeof(obj) {
+    "@babel/helpers - typeof";
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof = function _typeof(obj) {
+        return typeof obj;
+      };
+    } else {
+      _typeof = function _typeof(obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
+    }
+    return _typeof(obj);
+  }
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.LoginView = LoginView;
+  var _react = _interopRequireWildcard(require("react"));
+  var _s2 = $RefreshSig$();
+  function _getRequireWildcardCache() {
+    if (typeof WeakMap !== "function") return null;
+    var cache = new WeakMap();
+    _getRequireWildcardCache = function _getRequireWildcardCache() {
+      return cache;
+    };
+    return cache;
+  }
+  function _interopRequireWildcard(obj) {
+    if (obj && obj.__esModule) {
+      return obj;
+    }
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") {
+      return {
+        "default": obj
+      };
+    }
+    var cache = _getRequireWildcardCache();
+    if (cache && cache.has(obj)) {
+      return cache.get(obj);
+    }
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) {
+          Object.defineProperty(newObj, key, desc);
+        } else {
+          newObj[key] = obj[key];
+        }
+      }
+    }
+    newObj["default"] = obj;
+    if (cache) {
+      cache.set(obj, newObj);
+    }
+    return newObj;
+  }
+  function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+  }
+  function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || (/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/).test(n)) return _arrayLikeToArray(o, minLen);
+  }
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for (var i = 0, arr2 = new Array(len); i < len; i++) {
+      arr2[i] = arr[i];
+    }
+    return arr2;
+  }
+  function _iterableToArrayLimit(arr, i) {
+    if (typeof Symbol === "undefined" || !((Symbol.iterator in Object(arr)))) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _e = undefined;
+    try {
+      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"] != null) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+    return _arr;
+  }
+  function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+  }
+  function LoginView(props) {
+    _s2();
+    // call the useState() method (imported from React) with an empty string This method returns an array that you destructure (break down into variables)
+    var _useState = (0, _react.useState)(''), _useState2 = _slicedToArray(_useState, 2), username = _useState2[0], setUsername = _useState2[1];
+    var _useState3 = (0, _react.useState)(''), _useState4 = _slicedToArray(_useState3, 2), password = _useState4[0], setPassword = _useState4[1];
+    var handleSubmit = function handleSubmit(e) {
+      e.preventDefault();
+      console.log(username, password);
+      /*Sends a request to the server for authentication*/
+      /*then call props.onLoggedIn(username)*/
+      props.onLoggedIn(username);
+    };
+    return (
+      /*#__PURE__*/_react["default"].createElement("form", null, /*#__PURE__*/_react["default"].createElement("label", null, "Username:", /*#__PURE__*/_react["default"].createElement("input", {
+        type: "text",
+        value: username,
+        onChange: function onChange(e) {
+          return setUsername(e.target.value);
+        }
+      })), /*#__PURE__*/_react["default"].createElement("label", null, "Password:", /*#__PURE__*/_react["default"].createElement("input", {
+        type: "password",
+        value: password,
+        onChange: function onChange(e) {
+          return setPassword(e.target.value);
+        }
+      })), /*#__PURE__*/_react["default"].createElement("button", {
+        type: "submit",
+        onClick: handleSubmit
+      }, "Submit"))
+    );
+  }
+  _s2(LoginView, "wuQOK7xaXdVz4RMrZQhWbI751Oc=");
+  _c = LoginView;
+  var _c;
+  $RefreshReg$(_c, "LoginView");
   helpers.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;
