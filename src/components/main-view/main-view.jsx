@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/Row';
 
 
 //reusable movie-card components
+import { RegistrationView } from "../registration-view/registration-view";
 import { LoginView } from "../login-view/login-view";
 import { MovieCard } from "../movie-card/movie-card";
 import { MovieView } from "../movie-view/movie-view";
@@ -20,7 +21,8 @@ export default class MainView extends React.Component {
     this.state = {
       movies: null,
       selectedMovie: null,
-      user: null
+      user: null,
+      register: null
     };
   }
 
@@ -44,6 +46,12 @@ export default class MainView extends React.Component {
     });
   }
 
+  onRegistered(register) {
+    this.setState({
+        register,
+    });
+  }
+
   /* When a user successfully logs in, this function updates the `user` property in state to that *particular user*/
   onLoggedIn(user) {
     this.setState({
@@ -51,8 +59,13 @@ export default class MainView extends React.Component {
     });
   }
 
+ 
+
   render() {
-    const { movies, selectedMovie, user } = this.state;
+    //destructure
+    const { movies, selectedMovie, user, register } = this.state;
+
+    if (!register) return <RegistrationView onRegistered={(register) => this.onRegistered(register)}/>
 
     /* If there is no user, the LoginView is rendered. If there is a user logged in, the user details are *passed as a prop to the LoginView*/
     if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
@@ -62,7 +75,6 @@ export default class MainView extends React.Component {
 
     return (
       <Container>
-        <Row className="main-view">
           {/*If the state of `selectedMovie` is not null, that selected movie will be returned otherwise, all *movies will be returned*/}
           {selectedMovie ? (
             <Row className="justify-content-md-center">
@@ -77,12 +89,11 @@ export default class MainView extends React.Component {
               //pass the properties(props) to the MovieCard component of an individual movie:
               <Row className="justify-content-md-center">
                 {movies.map(movie => (
-                  <Col>
+                  <Col key={movie._id}>
                     <MovieCard key={movie._id} movie={movie} onClick={movie => this.onMovieClick(movie)} />
                   </Col>))}
               </Row>
             )}
-        </Row>
       </Container>
     );
   }

@@ -26592,6 +26592,7 @@ try {
   var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
   var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
   var _Row = _interopRequireDefault(require("react-bootstrap/Row"));
+  var _registrationView = require("../registration-view/registration-view");
   var _loginView = require("../login-view/login-view");
   var _movieCard = require("../movie-card/movie-card");
   var _movieView = require("../movie-view/movie-view");
@@ -26692,7 +26693,8 @@ try {
       _this.state = {
         movies: null,
         selectedMovie: null,
-        user: null
+        user: null,
+        register: null
       };
       return _this;
     }
@@ -26717,6 +26719,13 @@ try {
         });
       }
     }, {
+      key: "onRegistered",
+      value: function onRegistered(register) {
+        this.setState({
+          register: register
+        });
+      }
+    }, {
       key: "onLoggedIn",
       value: /*When a user successfully logs in, this function updates the `user` property in state to that *particular user*/
       function onLoggedIn(user) {
@@ -26728,7 +26737,15 @@ try {
       key: "render",
       value: function render() {
         var _this3 = this;
-        var _this$state = this.state, movies = _this$state.movies, selectedMovie = _this$state.selectedMovie, user = _this$state.user;
+        // destructure
+        var _this$state = this.state, movies = _this$state.movies, selectedMovie = _this$state.selectedMovie, user = _this$state.user, register = _this$state.register;
+        if (!register) return (
+          /*#__PURE__*/_react["default"].createElement(_registrationView.RegistrationView, {
+            onRegistered: function onRegistered(register) {
+              return _this3.onRegistered(register);
+            }
+          })
+        );
         /*If there is no user, the LoginView is rendered. If there is a user logged in, the user details are *passed as a prop to the LoginView*/
         if (!user) return (
           /*#__PURE__*/_react["default"].createElement(_loginView.LoginView, {
@@ -26744,9 +26761,7 @@ try {
           })
         );
         return (
-          /*#__PURE__*/_react["default"].createElement(_Container["default"], null, /*#__PURE__*/_react["default"].createElement(_Row["default"], {
-            className: "main-view"
-          }, selectedMovie ? /*#__PURE__*/_react["default"].createElement(_Row["default"], {
+          /*#__PURE__*/_react["default"].createElement(_Container["default"], null, selectedMovie ? /*#__PURE__*/_react["default"].createElement(_Row["default"], {
             className: "justify-content-md-center"
           }, /*#__PURE__*/_react["default"].createElement(_Row["default"], {
             md: 8
@@ -26763,7 +26778,9 @@ try {
             className: "justify-content-md-center"
           }, movies.map(function (movie) {
             return (
-              /*#__PURE__*/_react["default"].createElement(_Row["default"], null, /*#__PURE__*/_react["default"].createElement(_movieCard.MovieCard, {
+              /*#__PURE__*/_react["default"].createElement(_Row["default"], {
+                key: movie._id
+              }, /*#__PURE__*/_react["default"].createElement(_movieCard.MovieCard, {
                 key: movie._id,
                 movie: movie,
                 onClick: function onClick(movie) {
@@ -26771,7 +26788,7 @@ try {
                 }
               }))
             );
-          }))))
+          })))
         );
       }
     }]);
@@ -26784,7 +26801,7 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","axios":"7rA65","../movie-card/movie-card":"7v6h3","../movie-view/movie-view":"3xBbr","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","../login-view/login-view":"6M7fu","react-bootstrap/Button":"1ru0l","react-bootstrap/Row":"3fzwD","react-bootstrap/Container":"3Mt3t"}],"7rA65":[function(require,module,exports) {
+},{"react":"3b2NM","axios":"7rA65","../movie-card/movie-card":"7v6h3","../movie-view/movie-view":"3xBbr","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","../login-view/login-view":"6M7fu","react-bootstrap/Button":"1ru0l","react-bootstrap/Row":"3fzwD","react-bootstrap/Container":"3Mt3t","../registration-view/registration-view":"7gvH2"}],"7rA65":[function(require,module,exports) {
 module.exports = require('./lib/axios');
 },{"./lib/axios":"4qfhW"}],"4qfhW":[function(require,module,exports) {
 'use strict';
@@ -31756,6 +31773,189 @@ Container.defaultProps = defaultProps;
 var _default = Container;
 exports.default = _default;
 module.exports = exports["default"];
-},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","@babel/runtime/helpers/objectWithoutPropertiesLoose":"3Yx9V","classnames":"5aJRc","react":"3b2NM","./ThemeProvider":"4rz1S"}],"5iJih":[function() {},{}]},["1j6wU","68WUB","1DVjT"], "1DVjT", "parcelRequire427e")
+},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","@babel/runtime/helpers/objectWithoutPropertiesLoose":"3Yx9V","classnames":"5aJRc","react":"3b2NM","./ThemeProvider":"4rz1S"}],"7gvH2":[function(require,module,exports) {
+"use strict";
+var helpers = require("../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+helpers.prelude(module);
+try {
+  function _typeof(obj) {
+    "@babel/helpers - typeof";
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof = function _typeof(obj) {
+        return typeof obj;
+      };
+    } else {
+      _typeof = function _typeof(obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
+    }
+    return _typeof(obj);
+  }
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.RegistrationView = RegistrationView;
+  var _react = _interopRequireWildcard(require("react"));
+  var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
+  var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
+  var _s2 = $RefreshSig$();
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+      "default": obj
+    };
+  }
+  function _getRequireWildcardCache() {
+    if (typeof WeakMap !== "function") return null;
+    var cache = new WeakMap();
+    _getRequireWildcardCache = function _getRequireWildcardCache() {
+      return cache;
+    };
+    return cache;
+  }
+  function _interopRequireWildcard(obj) {
+    if (obj && obj.__esModule) {
+      return obj;
+    }
+    if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") {
+      return {
+        "default": obj
+      };
+    }
+    var cache = _getRequireWildcardCache();
+    if (cache && cache.has(obj)) {
+      return cache.get(obj);
+    }
+    var newObj = {};
+    var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+    for (var key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+        if (desc && (desc.get || desc.set)) {
+          Object.defineProperty(newObj, key, desc);
+        } else {
+          newObj[key] = obj[key];
+        }
+      }
+    }
+    newObj["default"] = obj;
+    if (cache) {
+      cache.set(obj, newObj);
+    }
+    return newObj;
+  }
+  function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+  }
+  function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || (/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/).test(n)) return _arrayLikeToArray(o, minLen);
+  }
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+    for (var i = 0, arr2 = new Array(len); i < len; i++) {
+      arr2[i] = arr[i];
+    }
+    return arr2;
+  }
+  function _iterableToArrayLimit(arr, i) {
+    if (typeof Symbol === "undefined" || !((Symbol.iterator in Object(arr)))) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _e = undefined;
+    try {
+      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"] != null) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+    return _arr;
+  }
+  function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+  }
+  function RegistrationView(props) {
+    _s2();
+    // call the useState() method (imported from React) with an empty string This method returns an array that you destructure (break down into variables)
+    var _useState = (0, _react.useState)(''), _useState2 = _slicedToArray(_useState, 2), username = _useState2[0], setUsername = _useState2[1];
+    var _useState3 = (0, _react.useState)(''), _useState4 = _slicedToArray(_useState3, 2), password = _useState4[0], setPassword = _useState4[1];
+    var _useState5 = (0, _react.useState)(''), _useState6 = _slicedToArray(_useState5, 2), email = _useState6[0], setEmail = _useState6[1];
+    var _ref = '', _ref2 = _slicedToArray(_ref, 2), dateofbirth = _ref2[0], setDateofbirth = _ref2[1];
+    var handleSubmit = function handleSubmit(e) {
+      e.preventDefault();
+      console.log(username, password, email, dateofbirth);
+      /*Sends a request to the server for authentication*/
+      /*then call props.onLoggedIn(username)*/
+      props.onRegistered(username);
+    };
+    return (
+      /*#__PURE__*/_react["default"].createElement(_Form["default"], null, /*#__PURE__*/_react["default"].createElement(_Form["default"].Group, {
+        controlId: "formUsername"
+      }, /*#__PURE__*/_react["default"].createElement(_Form["default"].Label, null, "Username:"), /*#__PURE__*/_react["default"].createElement(_Form["default"].Control, {
+        type: "text",
+        value: username,
+        onChange: function onChange(e) {
+          return setUsername(e.target.value);
+        }
+      })), /*#__PURE__*/_react["default"].createElement(_Form["default"].Group, {
+        controlId: "formPassword"
+      }, /*#__PURE__*/_react["default"].createElement(_Form["default"].Label, null, "Password:"), /*#__PURE__*/_react["default"].createElement(_Form["default"].Control, {
+        type: "password",
+        value: password,
+        onChange: function onChange(e) {
+          return setPassword(e.target.value);
+        }
+      })), /*#__PURE__*/_react["default"].createElement(_Form["default"].Group, {
+        controlId: "formEmail"
+      }, /*#__PURE__*/_react["default"].createElement(_Form["default"].Label, null, "Email:"), /*#__PURE__*/_react["default"].createElement(_Form["default"].Control, {
+        type: "email",
+        value: email,
+        onChange: function onChange(e) {
+          return setEmail(e.target.value);
+        }
+      })), /*#__PURE__*/_react["default"].createElement(_Form["default"].Group, {
+        controlId: "formDateofbirth"
+      }, /*#__PURE__*/_react["default"].createElement(_Form["default"].Label, null, "Date of Birth:"), /*#__PURE__*/_react["default"].createElement(_Form["default"].Control, {
+        type: "date",
+        value: dateofbirth,
+        onChange: function onChange(e) {
+          return setDateofbirth(e.target.value);
+        }
+      })), /*#__PURE__*/_react["default"].createElement(_Button["default"], {
+        variant: "primary",
+        type: "submit",
+        onClick: handleSubmit
+      }, "Submit"))
+    );
+  }
+  _s2(RegistrationView, "aynwAZdNgcDEmsoEpp+mcQSpBRo=");
+  _c = RegistrationView;
+  var _c;
+  $RefreshReg$(_c, "RegistrationView");
+  helpers.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+
+},{"react":"3b2NM","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl"}],"5iJih":[function() {},{}]},["1j6wU","68WUB","1DVjT"], "1DVjT", "parcelRequire427e")
 
 //# sourceMappingURL=index.02675e63.js.map
