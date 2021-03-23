@@ -26728,14 +26728,10 @@ try {
     }, {
       key: "onLoggedIn",
       value: /*When a user successfully logs in, this function updates the `user` property in state to that *particular user*/
-      function onLoggedIn(authData) {
-        console.log(authData);
+      function onLoggedIn(user) {
         this.setState({
-          user: authData.user.Username
+          user: user
         });
-        localStorage.setItem('token', authData.token);
-        localStorage.setItem('user', authData.user.Username);
-        this.getMovies(authData.token);
       }
     }, {
       key: "render",
@@ -30380,6 +30376,7 @@ try {
   });
   exports.MovieView = void 0;
   var _react = _interopRequireDefault(require("react"));
+  var _propTypes = _interopRequireDefault(require("prop-types"));
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
       "default": obj
@@ -30521,13 +30518,33 @@ try {
     return MovieView;
   })(_react["default"].Component);
   exports.MovieView = MovieView;
+  MovieView.propTypes = {
+    movie: _propTypes["default"].shape({
+      // movie prop may contain Title, and IF it does, it must be a string
+      Title: _propTypes["default"].string.isRequired,
+      Description: _propTypes["default"].string,
+      Year: _propTypes["default"].number,
+      ImageURL: _propTypes["default"].string.isRequired,
+      Genre: _propTypes["default"].shape({
+        Name: _propTypes["default"].string,
+        Biography: _propTypes["default"].string
+      }),
+      Director: _propTypes["default"].shape({
+        Name: _propTypes["default"].string,
+        Bio: _propTypes["default"].string,
+        Birthdate: _propTypes["default"].string
+      }),
+      Featured: _propTypes["default"].bool
+    }).isRequired,
+    onClick: _propTypes["default"].func.isRequired
+  };
   helpers.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl"}],"6M7fu":[function(require,module,exports) {
+},{"react":"3b2NM","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","prop-types":"4dfy5"}],"6M7fu":[function(require,module,exports) {
 "use strict";
 var helpers = require("../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
@@ -30552,9 +30569,9 @@ try {
   });
   exports.LoginView = LoginView;
   var _react = _interopRequireWildcard(require("react"));
+  var _propTypes = _interopRequireDefault(require("prop-types"));
   var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
   var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
-  var _axios = _interopRequireDefault(require("axios"));
   var _s2 = $RefreshSig$();
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -30654,16 +30671,10 @@ try {
     var _useState3 = (0, _react.useState)(''), _useState4 = _slicedToArray(_useState3, 2), password = _useState4[0], setPassword = _useState4[1];
     var handleSubmit = function handleSubmit(e) {
       e.preventDefault();
-      /*Send a request to the server for authentication*/
-      _axios["default"].post('https://kumi-movie-index.herokuapp.com/login', {
-        Username: username,
-        Password: password
-      }).then(function (response) {
-        var data = response.data;
-        props.onLoggedIn(data);
-      })["catch"](function (e) {
-        console.log(e.response);
-      });
+      console.log(username, password);
+      /*Sends a request to the server for authentication*/
+      /*then call props.onLoggedIn(username)*/
+      props.onLoggedIn(username);
     };
     return (
       /*#__PURE__*/_react["default"].createElement(_Form["default"], null, /*#__PURE__*/_react["default"].createElement(_Form["default"].Group, {
@@ -30691,6 +30702,14 @@ try {
   }
   _s2(LoginView, "wuQOK7xaXdVz4RMrZQhWbI751Oc=");
   _c = LoginView;
+  LoginView.propTypes = {
+    user: _propTypes["default"].shape({
+      username: _propTypes["default"].string.isRequired,
+      pasword: _propTypes["default"].string.isRequired
+    }),
+    onLoggedIn: _propTypes["default"].func.isRequired,
+    onRegister: _propTypes["default"].func
+  };
   var _c;
   $RefreshReg$(_c, "LoginView");
   helpers.postlude(module);
@@ -30699,7 +30718,7 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","axios":"7rA65"}],"6A5ko":[function(require,module,exports) {
+},{"react":"3b2NM","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","prop-types":"4dfy5"}],"6A5ko":[function(require,module,exports) {
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -31809,6 +31828,7 @@ try {
   });
   exports.RegistrationView = RegistrationView;
   var _react = _interopRequireWildcard(require("react"));
+  var _propTypes = _interopRequireDefault(require("prop-types"));
   var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
   var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
   var _s2 = $RefreshSig$();
@@ -31909,10 +31929,10 @@ try {
     var _useState = (0, _react.useState)(''), _useState2 = _slicedToArray(_useState, 2), username = _useState2[0], setUsername = _useState2[1];
     var _useState3 = (0, _react.useState)(''), _useState4 = _slicedToArray(_useState3, 2), password = _useState4[0], setPassword = _useState4[1];
     var _useState5 = (0, _react.useState)(''), _useState6 = _slicedToArray(_useState5, 2), email = _useState6[0], setEmail = _useState6[1];
-    var _useState7 = (0, _react.useState)(''), _useState8 = _slicedToArray(_useState7, 2), birthday = _useState8[0], setBirthday = _useState8[1];
+    var _useState7 = (0, _react.useState)(''), _useState8 = _slicedToArray(_useState7, 2), dateofbirth = _useState8[0], setDateofbirth = _useState8[1];
     var handleSubmit = function handleSubmit(e) {
       e.preventDefault();
-      console.log(username, password, email, birthday);
+      console.log(username, password, email, dateofbirth);
       /*Sends a request to the server for authentication*/
       /*then call props.onLoggedIn(username)*/
       props.onRegistered(username);
@@ -31943,12 +31963,12 @@ try {
           return setEmail(e.target.value);
         }
       })), /*#__PURE__*/_react["default"].createElement(_Form["default"].Group, {
-        controlId: "formBirthday"
+        controlId: "formDateofbirth"
       }, /*#__PURE__*/_react["default"].createElement(_Form["default"].Label, null, "Date of Birth:"), /*#__PURE__*/_react["default"].createElement(_Form["default"].Control, {
         type: "date",
-        value: birthday,
+        value: dateofbirth,
         onChange: function onChange(e) {
-          return setBirthday(e.target.value);
+          return setDateofbirth(e.target.value);
         }
       })), /*#__PURE__*/_react["default"].createElement(_Button["default"], {
         variant: "primary",
@@ -31957,8 +31977,17 @@ try {
       }, "Submit"))
     );
   }
-  _s2(RegistrationView, "tdA1KK8yaZidqYo0wscqshHt/KE=");
+  _s2(RegistrationView, "SzkDAV7iEWjP4tJn95HSixHtuyM=");
   _c = RegistrationView;
+  RegistrationView.propTypes = {
+    register: _propTypes["default"].shape({
+      username: _propTypes["default"].string.isRequired,
+      password: _propTypes["default"].string.isRequired,
+      confirmPassword: _propTypes["default"].string.isRequired,
+      birthdate: _propTypes["default"].string.isRequired
+    }),
+    onRegister: _propTypes["default"].func
+  };
   var _c;
   $RefreshReg$(_c, "RegistrationView");
   helpers.postlude(module);
@@ -31967,6 +31996,6 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl"}],"5iJih":[function() {},{}]},["1j6wU","68WUB","1DVjT"], "1DVjT", "parcelRequire427e")
+},{"react":"3b2NM","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","prop-types":"4dfy5"}],"5iJih":[function() {},{}]},["1j6wU","68WUB","1DVjT"], "1DVjT", "parcelRequire427e")
 
 //# sourceMappingURL=index.02675e63.js.map

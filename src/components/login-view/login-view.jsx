@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
@@ -45,3 +46,11 @@ export function LoginView(props) {
         </Form>
     );
 }
+LoginView.propTypes = {
+    user: PropTypes.shape({
+        username: PropTypes.string.isRequired,
+        pasword: PropTypes.string.isRequired
+    }),
+    onLoggedIn: PropTypes.func.isRequired,
+    onRegister: PropTypes.func
+};
