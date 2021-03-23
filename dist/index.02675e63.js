@@ -30662,7 +30662,7 @@ try {
         var data = response.data;
         props.onLoggedIn(data);
       })["catch"](function (e) {
-        console.log('no such user');
+        console.log(e.response);
       });
     };
     return (

@@ -6,10 +6,12 @@ import axios from 'axios';
 
 
 
+
 export function LoginView(props) {
     //call the useState() method (imported from React) with an empty string This method returns an array that you destructure (break down into variables)
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
     const handleSubmit = (e) => {
         e.preventDefault();
         /* Send a request to the server for authentication */
@@ -22,7 +24,7 @@ export function LoginView(props) {
                 props.onLoggedIn(data);
             })
             .catch(e => {
-                console.log('no such user')
+                console.log(e.response);
             });
     };
 
