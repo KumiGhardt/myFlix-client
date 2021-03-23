@@ -26701,13 +26701,14 @@ try {
     _createClass(MainView, [{
       key: "componentDidMount",
       value: function componentDidMount() {
-        var accessToken = localStorage.getItem('token');
-        if (accessToken !== null) {
-          this.setState({
-            user: localStorage.getItem('user')
+        var _this2 = this;
+        _axios["default"].get("https://kumi-movie-index.herokuapp.com/movies").then(function (response) {
+          _this2.setState({
+            movies: response.data
           });
-          this.getMovies(accessToken);
-        }
+        })["catch"](function (error) {
+          console.log(error);
+        });
       }
     }, {
       key: "onMovieClick",
@@ -26718,8 +26719,8 @@ try {
         });
       }
     }, {
-      key: "onRegister",
-      value: function onRegister(register) {
+      key: "onRegistered",
+      value: function onRegistered(register) {
         this.setState({
           register: register
         });
@@ -26737,24 +26738,6 @@ try {
         this.getMovies(authData.token);
       }
     }, {
-      key: "getMovies",
-      value: // make a GET request to theroku.
-      function getMovies(token) {
-        var _this2 = this;
-        _axios["default"].get('https://kumi-movie-index.herokuapp.com/', {
-          headers: {
-            Authorization: ("Bearer ").concat(token)
-          }
-        }).then(function (response) {
-          // Assign the result to the state
-          _this2.setState({
-            movies: response.data
-          });
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      }
-    }, {
       key: "render",
       value: function render() {
         var _this3 = this;
@@ -26762,8 +26745,8 @@ try {
         var _this$state = this.state, movies = _this$state.movies, selectedMovie = _this$state.selectedMovie, user = _this$state.user, register = _this$state.register;
         if (!register) return (
           /*#__PURE__*/_react["default"].createElement(_registrationView.RegistrationView, {
-            onRegister: function onRegister(register) {
-              return _this3.onRegister(register);
+            onRegistered: function onRegistered(register) {
+              return _this3.onRegistered(register);
             }
           })
         );
@@ -26799,13 +26782,15 @@ try {
             className: "justify-content-md-center"
           }, movies.map(function (movie) {
             return (
-              /*#__PURE__*/_react["default"].createElement(_movieCard.MovieCard, {
+              /*#__PURE__*/_react["default"].createElement(_Row["default"], {
+                key: movie._id
+              }, /*#__PURE__*/_react["default"].createElement(_movieCard.MovieCard, {
                 key: movie._id,
                 movie: movie,
                 onClick: function onClick(movie) {
                   return _this3.onMovieClick(movie);
                 }
-              })
+              }))
             );
           })))
         );
@@ -30395,7 +30380,6 @@ try {
   });
   exports.MovieView = void 0;
   var _react = _interopRequireDefault(require("react"));
-  var _propTypes = _interopRequireDefault(require("prop-types"));
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
       "default": obj
@@ -30537,33 +30521,13 @@ try {
     return MovieView;
   })(_react["default"].Component);
   exports.MovieView = MovieView;
-  MovieView.propTypes = {
-    movie: _propTypes["default"].shape({
-      // movie prop may contain Title, and IF it does, it must be a string
-      Title: _propTypes["default"].string.isRequired,
-      Description: _propTypes["default"].string,
-      Year: _propTypes["default"].number,
-      ImageURL: _propTypes["default"].string.isRequired,
-      Genre: _propTypes["default"].shape({
-        Name: _propTypes["default"].string,
-        Biography: _propTypes["default"].string
-      }),
-      Director: _propTypes["default"].shape({
-        Name: _propTypes["default"].string,
-        Bio: _propTypes["default"].string,
-        Birthdate: _propTypes["default"].string
-      }),
-      Featured: _propTypes["default"].bool
-    }).isRequired,
-    onClick: _propTypes["default"].func.isRequired
-  };
   helpers.postlude(module);
 } finally {
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","prop-types":"4dfy5"}],"6M7fu":[function(require,module,exports) {
+},{"react":"3b2NM","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl"}],"6M7fu":[function(require,module,exports) {
 "use strict";
 var helpers = require("../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
@@ -30588,7 +30552,6 @@ try {
   });
   exports.LoginView = LoginView;
   var _react = _interopRequireWildcard(require("react"));
-  var _propTypes = _interopRequireDefault(require("prop-types"));
   var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
   var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
   var _axios = _interopRequireDefault(require("axios"));
@@ -30728,14 +30691,6 @@ try {
   }
   _s2(LoginView, "wuQOK7xaXdVz4RMrZQhWbI751Oc=");
   _c = LoginView;
-  LoginView.propTypes = {
-    user: _propTypes["default"].shape({
-      username: _propTypes["default"].string.isRequired,
-      pasword: _propTypes["default"].string.isRequired
-    }),
-    onLoggedIn: _propTypes["default"].func.isRequired,
-    onRegister: _propTypes["default"].func
-  };
   var _c;
   $RefreshReg$(_c, "LoginView");
   helpers.postlude(module);
@@ -30744,7 +30699,7 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","prop-types":"4dfy5","axios":"7rA65"}],"6A5ko":[function(require,module,exports) {
+},{"react":"3b2NM","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","axios":"7rA65"}],"6A5ko":[function(require,module,exports) {
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -31854,7 +31809,6 @@ try {
   });
   exports.RegistrationView = RegistrationView;
   var _react = _interopRequireWildcard(require("react"));
-  var _propTypes = _interopRequireDefault(require("prop-types"));
   var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
   var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
   var _s2 = $RefreshSig$();
@@ -31961,7 +31915,7 @@ try {
       console.log(username, password, email, birthday);
       /*Sends a request to the server for authentication*/
       /*then call props.onLoggedIn(username)*/
-      props.onRegister(username);
+      props.onRegistered(username);
     };
     return (
       /*#__PURE__*/_react["default"].createElement(_Form["default"], null, /*#__PURE__*/_react["default"].createElement(_Form["default"].Group, {
@@ -32005,15 +31959,6 @@ try {
   }
   _s2(RegistrationView, "tdA1KK8yaZidqYo0wscqshHt/KE=");
   _c = RegistrationView;
-  RegistrationView.propTypes = {
-    register: _propTypes["default"].shape({
-      username: _propTypes["default"].string.isRequired,
-      password: _propTypes["default"].string.isRequired,
-      confirmPassword: _propTypes["default"].string.isRequired,
-      birthdate: _propTypes["default"].string.isRequired
-    }),
-    onRegister: _propTypes["default"].func
-  };
   var _c;
   $RefreshReg$(_c, "RegistrationView");
   helpers.postlude(module);
@@ -32022,6 +31967,6 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","prop-types":"4dfy5"}],"5iJih":[function() {},{}]},["1j6wU","68WUB","1DVjT"], "1DVjT", "parcelRequire427e")
+},{"react":"3b2NM","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl"}],"5iJih":[function() {},{}]},["1j6wU","68WUB","1DVjT"], "1DVjT", "parcelRequire427e")
 
 //# sourceMappingURL=index.02675e63.js.map
