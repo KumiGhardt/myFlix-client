@@ -30550,6 +30550,7 @@ try {
   var _react = _interopRequireWildcard(require("react"));
   var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
   var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
+  var _axios = _interopRequireDefault(require("axios"));
   var _s2 = $RefreshSig$();
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -30649,10 +30650,16 @@ try {
     var _useState3 = (0, _react.useState)(''), _useState4 = _slicedToArray(_useState3, 2), password = _useState4[0], setPassword = _useState4[1];
     var handleSubmit = function handleSubmit(e) {
       e.preventDefault();
-      console.log(username, password);
-      /*Sends a request to the server for authentication*/
-      /*then call props.onLoggedIn(username)*/
-      props.onLoggedIn(username);
+      /*Send a request to the server for authentication*/
+      _axios["default"].post('https://kumi-movie-index.herokuapp.com/login', {
+        Username: username,
+        Password: password
+      }).then(function (response) {
+        var data = response.data;
+        props.onLoggedIn(data);
+      })["catch"](function (e) {
+        console.log('no such user');
+      });
     };
     return (
       /*#__PURE__*/_react["default"].createElement(_Form["default"], null, /*#__PURE__*/_react["default"].createElement(_Form["default"].Group, {
@@ -30688,7 +30695,7 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l"}],"6A5ko":[function(require,module,exports) {
+},{"react":"3b2NM","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","axios":"7rA65"}],"6A5ko":[function(require,module,exports) {
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -31898,7 +31905,7 @@ try {
     var _useState = (0, _react.useState)(''), _useState2 = _slicedToArray(_useState, 2), username = _useState2[0], setUsername = _useState2[1];
     var _useState3 = (0, _react.useState)(''), _useState4 = _slicedToArray(_useState3, 2), password = _useState4[0], setPassword = _useState4[1];
     var _useState5 = (0, _react.useState)(''), _useState6 = _slicedToArray(_useState5, 2), email = _useState6[0], setEmail = _useState6[1];
-    var _ref = '', _ref2 = _slicedToArray(_ref, 2), dateofbirth = _ref2[0], setDateofbirth = _ref2[1];
+    var _useState7 = (0, _react.useState)(''), _useState8 = _slicedToArray(_useState7, 2), dateofbirth = _useState8[0], setDateofbirth = _useState8[1];
     var handleSubmit = function handleSubmit(e) {
       e.preventDefault();
       console.log(username, password, email, dateofbirth);
@@ -31946,7 +31953,7 @@ try {
       }, "Submit"))
     );
   }
-  _s2(RegistrationView, "aynwAZdNgcDEmsoEpp+mcQSpBRo=");
+  _s2(RegistrationView, "SzkDAV7iEWjP4tJn95HSixHtuyM=");
   _c = RegistrationView;
   var _c;
   $RefreshReg$(_c, "RegistrationView");
