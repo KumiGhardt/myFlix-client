@@ -6,8 +6,6 @@ import axios from 'axios';
 
 
 
-
-
 export function LoginView(props) {
     //call the useState() method (imported from React) with an empty string This method returns an array that you destructure (break down into variables)
     const [username, setUsername] = useState('');
@@ -40,7 +38,7 @@ export function LoginView(props) {
                 <Form.Label>Password:</Form.Label>
                 <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} />
             </Form.Group>
-            <Button variant="primary" type="submit" onClick={handleSubmit}>
+            <Button variant="dark" type="submit" onClick={handleSubmit}>
                 Submit
           </Button>
         </Form>
@@ -50,6 +48,7 @@ LoginView.propTypes = {
     user: PropTypes.shape({
         username: PropTypes.string.isRequired,
         pasword: PropTypes.string.isRequired
-    }),
+    }).isRequired,
     onLoggedIn: PropTypes.func.isRequired,
+    onRegister: PropTypes.func
 };

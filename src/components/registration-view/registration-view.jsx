@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+//import Config from '../../config';
+import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
@@ -11,12 +13,30 @@ export function RegistrationView(props) {
     const [email, setEmail] = useState('');
     const [birthday, setBirthday] = useState('');
 
-    const handleSubmit = (e) => {
+    const swapView = (e) => {
         e.preventDefault();
-        console.log(username, password, email, birthday);
-        /* Sends a request to the server for authentication */
-        /* then call props.onLoggedIn(username) */
-        props.onRegister(username);
+        history.push(`/login`);
+        // window.location.pathname = `/login`
+    }
+
+    const handleRegister = (e) => {
+        e.preventDefault();
+        // sends request to server for authentication
+        // entire URL is in package.json under 'proxy' to get past CORS
+        axios.post('https://kumi-movie-index.herokuapp.com/users', {
+            Username: username,
+            Email: email,
+            Password: password,
+            Birthday: birthday
+        })
+            .then(response => {
+                const data = response.data;
+                console.log(data);
+                window.open('/', '_self'); // the second argument '_self' is necessary so that the page will open in the current tab
+            })
+            .catch(e => {
+                console.log(e.response)
+            });
     };
 
     return (
@@ -40,7 +60,7 @@ export function RegistrationView(props) {
                 <Form.Label>Date of Birth:</Form.Label>
                 <Form.Control type="date" value={birthday} onChange={e => setBirthday(e.target.value)} />
             </Form.Group>
-            <Button variant="primary" type="submit" onClick={handleSubmit}>
+            <Button variant="dark" type="submit" onClick={handleRegister}>
                 Submit
           </Button>
         </Form>
@@ -52,7 +72,7 @@ RegistrationView.propTypes = {
         username: PropTypes.string.isRequired,
         password: PropTypes.string.isRequired,
         confirmPassword: PropTypes.string.isRequired,
-        birthdate: PropTypes.string.isRequired
+        birthdate: PropTypes.instanceOf(Date).isRequired
     }),
     onRegister: PropTypes.func,
 };

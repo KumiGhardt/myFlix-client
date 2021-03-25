@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
+import { Link } from "react-router-dom";
+
+
 //the MovieCard component (child component) is responsible for listening for click events on the SingleMovie view and transmitting this as props to MainView (parent component)
 export class MovieCard extends React.Component {
   render() {
@@ -14,6 +17,7 @@ export class MovieCard extends React.Component {
         <Card.Body>
           <Card.Title>{movie.Title}</Card.Title>
           <Card.Text>{movie.Description}</Card.Text>
+          <Link to={`/movies/${movie._id}`}></Link>
           <Button onClick={() => onClick(movie)} variant="link">Open</Button>
         </Card.Body>
       </Card>
