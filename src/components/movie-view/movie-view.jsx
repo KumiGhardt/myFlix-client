@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
-
+import Button from 'react-bootstrap/Button';
 
 export class MovieView extends React.Component {
 
@@ -43,13 +43,13 @@ export class MovieView extends React.Component {
             <Button variant="link">Director</Button>
           </Link>
         </div>
-        <button onClick={removeSelectedMovie}>Back</button>
+        <Link to={'/'}> <Button>Back</Button> </Link>
       </div>
     );
   }
 }
 MovieView.propTypes = {
-  movie: PropTypes.shape({
+  movies: PropTypes.shape({
     // movie prop may contain Title, and IF it does, it must be a string
     Title: PropTypes.string.isRequired,
     Description: PropTypes.string,
@@ -66,5 +66,4 @@ MovieView.propTypes = {
     }),
     Featured: PropTypes.bool
   }).isRequired,
-  onClick: PropTypes.func.isRequired
 };
