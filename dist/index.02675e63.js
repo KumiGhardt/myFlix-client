@@ -26591,6 +26591,13 @@ try {
   var _reactRouterDom = require("react-router-dom");
   var _axios = _interopRequireDefault(require("axios"));
   var _propTypes = _interopRequireDefault(require("prop-types"));
+  var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
+  var _Nav = _interopRequireDefault(require("react-bootstrap/Nav"));
+  var _Navbar = _interopRequireDefault(require("react-bootstrap/Navbar"));
+  var _NavDropdown = _interopRequireDefault(require("react-bootstrap/NavDropdown"));
+  var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
+  var _FormControl = _interopRequireDefault(require("react-bootstrap/FormControl"));
+  var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
   require("../main-view/main-view.scss");
   var _loginView = require("../login-view/login-view");
   var _movieCard = require("../movie-card/movie-card");
@@ -26781,7 +26788,27 @@ try {
           })
         );
         return (
-          /*#__PURE__*/_react["default"].createElement(_reactRouterDom.BrowserRouter, null, /*#__PURE__*/_react["default"].createElement("div", {
+          /*#__PURE__*/_react["default"].createElement(_reactRouterDom.BrowserRouter, null, /*#__PURE__*/_react["default"].createElement(_Container["default"], null, /*#__PURE__*/_react["default"].createElement(_Navbar["default"], {
+            expand: "lg"
+          }, /*#__PURE__*/_react["default"].createElement(_Navbar["default"].Brand, {
+            href: "/"
+          }, "Home"), /*#__PURE__*/_react["default"].createElement(_Navbar["default"].Toggle, {
+            "aria-controls": "basic-navbar-nav"
+          }), /*#__PURE__*/_react["default"].createElement(_Form["default"], {
+            inline: true
+          }, /*#__PURE__*/_react["default"].createElement(_FormControl["default"], {
+            type: "text",
+            placeholder: "Search",
+            className: "mr-sm-2"
+          })), /*#__PURE__*/_react["default"].createElement(_Navbar["default"].Collapse, {
+            id: "basic-navbar-nav"
+          }, /*#__PURE__*/_react["default"].createElement(_Nav["default"], {
+            className: "mr-auto"
+          }, /*#__PURE__*/_react["default"].createElement(_Nav["default"].Link, {
+            href: "/users/:username"
+          }, "My Account")), /*#__PURE__*/_react["default"].createElement(_Button["default"], {
+            variant: "warning"
+          }, "Log Out")))), /*#__PURE__*/_react["default"].createElement("div", {
             className: "main-view"
           }, /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Route, {
             exact: true,
@@ -26891,7 +26918,7 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","axios":"7rA65","../movie-card/movie-card":"7v6h3","../movie-view/movie-view":"3xBbr","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","../login-view/login-view":"6M7fu","../registration-view/registration-view":"7gvH2","react-router-dom":"1PMSK","../director-view/director-view":"7HF27","../genre-view/genre-view":"6FLqj","../profile-view/profile-view":"3CncI","prop-types":"4dfy5","../main-view/main-view.scss":"3X8QW"}],"7rA65":[function(require,module,exports) {
+},{"react":"3b2NM","axios":"7rA65","../movie-card/movie-card":"7v6h3","../movie-view/movie-view":"3xBbr","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","../login-view/login-view":"6M7fu","../registration-view/registration-view":"7gvH2","react-router-dom":"1PMSK","../director-view/director-view":"7HF27","../genre-view/genre-view":"6FLqj","../profile-view/profile-view":"3CncI","prop-types":"4dfy5","../main-view/main-view.scss":"3X8QW","react-bootstrap/Container":"3Mt3t","react-bootstrap/Nav":"3T3v1","react-bootstrap/Navbar":"3qLFd","react-bootstrap/NavDropdown":"1qmIy","react-bootstrap/Form":"6A5ko","react-bootstrap/FormControl":"573gP","react-bootstrap/Button":"1ru0l"}],"7rA65":[function(require,module,exports) {
 module.exports = require('./lib/axios');
 },{"./lib/axios":"4qfhW"}],"4qfhW":[function(require,module,exports) {
 'use strict';
@@ -36706,18 +36733,22 @@ try {
       key: "getUser",
       value: function getUser(token) {
         var _this2 = this;
-        var username = localStorage.getItem('user');
+        var Username = localStorage.getItem('user');
         _axios["default"].get('https://kumi-movie-index.herokuapp.com/users', {
           headers: {
             Authorization: ("Bearer ").concat(token)
           }
         }).then(function (response) {
+          // filter current user
+          var currentUser = response.data.filter(function (item) {
+            return item.Username === Username;
+          });
           _this2.setState({
-            Username: response.data.Username,
-            Password: response.data.Password,
-            Email: response.data.Email,
-            Birthday: response.data.Birthday,
-            FavoriteMovies: response.data.FavoriteMovies
+            Username: currentUser[0].Username,
+            Password: currentUser[0].Password,
+            Email: currentUser[0].Email,
+            Birthday: currentUser[0].Birthday,
+            FavoriteMovies: currentUser[0].FavoriteMovies
           });
         })["catch"](function (error) {
           console.log(error);
@@ -36762,7 +36793,7 @@ try {
         var username = localStorage.getItem('user');
         (0, _axios["default"])({
           method: 'put',
-          url: ("").concat(Config.API_URL, "/users/").concat(username),
+          url: ('https://kumi-movie-index.herokuapp.com/').concat("/users/", username),
           headers: {
             Authorization: ("Bearer ").concat(token)
           },
@@ -36831,9 +36862,8 @@ try {
       key: "render",
       value: function render() {
         var _this5 = this;
-        var _this$state = this.state, FavoriteMovies = _this$state.FavoriteMovies, validated = _this$state.validated;
+        var _this$state = this.state, movies = _this$state.movies, FavoriteMovies = _this$state.FavoriteMovies, validated = _this$state.validated;
         var username = localStorage.getItem('user');
-        var movies = this.props.movies;
         return (
           /*#__PURE__*/_react["default"].createElement(_reactBootstrap.Container, {
             className: "profile-view"
@@ -36901,7 +36931,7 @@ try {
             className: "profile-title"
           }, "Update Profile"), /*#__PURE__*/_react["default"].createElement(_reactBootstrap.Card.Subtitle, {
             className: "card-subtitle-update"
-          }, "If you are not updating a certain field (ex; email), then leave that field empty.", /*#__PURE__*/_react["default"].createElement("span", {
+          }, "Please leave any fields not being updated empty.", /*#__PURE__*/_react["default"].createElement("span", {
             className: "password-instructions"
           }, "*You must enter in either a new or existing password to verify the change!")), /*#__PURE__*/_react["default"].createElement(_reactBootstrap.Card.Body, null, /*#__PURE__*/_react["default"].createElement(_reactBootstrap.Form, {
             noValidate: true,
@@ -36991,6 +37021,7 @@ try {
   })(_react["default"].Component);
   exports.ProfileView = ProfileView;
   ProfileView.propTypes = {
+    movies: _propTypes["default"].array.isRequired,
     user: _propTypes["default"].shape({
       FavoriteMovies: _propTypes["default"].arrayOf(_propTypes["default"].shape({
         _id: _propTypes["default"].string.isRequired,

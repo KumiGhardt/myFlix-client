@@ -37,18 +37,21 @@ export class ProfileView extends React.Component {
 
 
   getUser(token) {
-    const username = localStorage.getItem('user');
+    const Username = localStorage.getItem('user');
     axios
       .get('https://kumi-movie-index.herokuapp.com/users', {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
+        //filter current user
+        const currentUser = response.data.filter(item => item.Username === Username)
+        
         this.setState({
-          Username: response.data.Username,
-          Password: response.data.Password,
-          Email: response.data.Email,
-          Birthday: response.data.Birthday,
-          FavoriteMovies: response.data.FavoriteMovies,
+          Username: currentUser[0].Username,
+          Password: currentUser[0].Password,
+          Email: currentUser[0].Email,
+          Birthday: currentUser[0].Birthday,
+          FavoriteMovies: currentUser[0].FavoriteMovies,
         });
       })
       .catch(function (error) {
@@ -95,7 +98,7 @@ export class ProfileView extends React.Component {
 
     axios({
       method: 'put',
-      url: `${Config.API_URL}/users/${username}`,
+      url: `${'https://kumi-movie-index.herokuapp.com/'}/users/${username}`,
       headers: { Authorization: `Bearer ${token}` },
       data: {
         Username: newUsername ? newUsername : this.state.Username,
@@ -162,14 +165,12 @@ export class ProfileView extends React.Component {
   }
 
   render() {
-    const { FavoriteMovies, validated } = this.state;
+    const { movies, FavoriteMovies, validated } = this.state;
     const username = localStorage.getItem('user');
-    const { movies } = this.props;
 
     return (
       <Container className='profile-view'>
         <Tabs defaultActiveKey='profile' transition={false} className='profile-tabs'>
-
 
           <Tab className='tab-item' eventKey='profile' title='Profile'>
             <Card className='profile-card' border='info'>
@@ -207,7 +208,7 @@ export class ProfileView extends React.Component {
           <Tab className='tab-item' eventKey='update' title='Update'>
             <Card className='update-card' border='info'>
                 <Card.Title className='profile-title'>Update Profile</Card.Title>
-                <Card.Subtitle className='card-subtitle-update'>If you are not updating a certain field (ex; email), then leave that field empty.
+                <Card.Subtitle className='card-subtitle-update'>Please leave any fields not being updated empty.
                   <span className='password-instructions'>*You must enter in either a new or existing password to verify the change!</span>
                 </Card.Subtitle>
                 <Card.Body>
@@ -263,6 +264,7 @@ export class ProfileView extends React.Component {
 }
 
 ProfileView.propTypes = {
+  movies: propTypes.array.isRequired,
   user: propTypes.shape({
     FavoriteMovies: propTypes.arrayOf(
       propTypes.shape({

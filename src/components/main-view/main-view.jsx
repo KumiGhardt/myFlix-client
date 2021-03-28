@@ -5,6 +5,14 @@ import {
 } from "react-router-dom";
 import axios from "axios";
 import PropTypes from 'prop-types';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Form from "react-bootstrap/Form";
+import FormControl from "react-bootstrap/FormControl";
+import Button from 'react-bootstrap/Button';
+
 import '../main-view/main-view.scss';
 
 
@@ -29,7 +37,7 @@ export default class MainView extends React.Component {
         username: null,
         password: null
       },
-      register: null,  
+      register: null,
     };
   }
 
@@ -99,6 +107,22 @@ export default class MainView extends React.Component {
 
     return (
       <Router>
+        <Container>
+          <Navbar expand="lg" >
+            <Navbar.Brand href="/">Home</Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Form inline>
+              <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+            </Form>
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="mr-auto">
+                <Nav.Link href="/users/:username">My Account</Nav.Link>
+              </Nav>
+              <Button variant="warning">Log Out</Button>
+            </Navbar.Collapse>
+          </Navbar>
+        </Container>
+
         <div className="main-view">
           <Route exact path="/" render={() => {
             if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
@@ -107,7 +131,7 @@ export default class MainView extends React.Component {
 
           <Route path="/register" render={() => <RegistrationView />} />
           {/* if (!register) return <RegistrationView onRegister={(register) => this.onRegister(register)} /> */}
-          
+
           <Route path="/movies/:movieId" render={({ match }) => <MovieView movie={movies.find(m => m._id === match.params.movieId)} />} />
 
           <Route path="/genres/:name" render={({ match }) => {
