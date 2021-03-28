@@ -21,8 +21,7 @@ import { ProfileView } from "../profile-view/profile-view";
 export default class MainView extends React.Component {
   constructor(props) {
     super(props);
-    // Initial state is set to null
-
+    // props
     this.state = {
       movies: [],
       selectedMovie: null,
@@ -30,7 +29,7 @@ export default class MainView extends React.Component {
         username: null,
         password: null
       },
-      register: null
+      register: null,  
     };
   }
 
@@ -69,7 +68,7 @@ export default class MainView extends React.Component {
     this.getMovies(authData.token);
   }
 
-  //make a GET request to theroku.
+  //make a GET request to heroku.
   getMovies(token) {
     axios
       .get('https://kumi-movie-index.herokuapp.com/movies', {
@@ -97,6 +96,7 @@ export default class MainView extends React.Component {
     // Before the movies have been loaded
     if (!movies) return <div className="main-view" />;
 
+
     return (
       <Router>
         <div className="main-view">
@@ -112,12 +112,12 @@ export default class MainView extends React.Component {
 
           <Route path="/genres/:name" render={({ match }) => {
             if (!movies) return <div className="main-view" />;
-            return <GenreView movies={movies} genre={movies.find(m => m.Genre.Name === match.params.name).Genre} />
+            return <GenreView genre={movies.find((m) => m.Genre.Name === match.params.name)} movies={movies} />
           }} />
 
           <Route path="/directors/:name" render={({ match }) => {
             if (!movies) return <div className="main-view" />;
-            return <DirectorView director={movies.find(m => m.Director.Name === match.params.name).Director} />
+            return <DirectorView director={movies.find((m) => m.Director.Name === match.params.name)} movies={movies} />
           }} />
 
           <Route exact path='/users/:username'

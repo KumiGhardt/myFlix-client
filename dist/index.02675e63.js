@@ -26692,7 +26692,7 @@ try {
       var _this;
       _classCallCheck(this, MainView);
       _this = _super.call(this, props);
-      // Initial state is set to null
+      // props
       _this.state = {
         movies: [],
         selectedMovie: null,
@@ -26744,7 +26744,7 @@ try {
       }
     }, {
       key: "getMovies",
-      value: // make a GET request to theroku.
+      value: // make a GET request to heroku.
       function getMovies(token) {
         var _this2 = this;
         _axios["default"].get('https://kumi-movie-index.herokuapp.com/movies', {
@@ -26833,10 +26833,10 @@ try {
               );
               return (
                 /*#__PURE__*/_react["default"].createElement(_genreView.GenreView, {
-                  movies: movies,
                   genre: movies.find(function (m) {
                     return m.Genre.Name === match.params.name;
-                  }).Genre
+                  }),
+                  movies: movies
                 })
               );
             }
@@ -26853,7 +26853,8 @@ try {
                 /*#__PURE__*/_react["default"].createElement(_directorView.DirectorView, {
                   director: movies.find(function (m) {
                     return m.Director.Name === match.params.name;
-                  }).Director
+                  }),
+                  movies: movies
                 })
               );
             }
@@ -28773,9 +28774,9 @@ try {
             src: movie.ImagePath
           }), /*#__PURE__*/_react["default"].createElement(_Card["default"].Body, null, /*#__PURE__*/_react["default"].createElement(_Card["default"].Title, null, movie.Title), /*#__PURE__*/_react["default"].createElement(_Card["default"].Text, null, movie.Description), /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Link, {
             to: ("/movies/").concat(movie._id)
-          }), /*#__PURE__*/_react["default"].createElement(_Button["default"], {
+          }, /*#__PURE__*/_react["default"].createElement(_Button["default"], {
             variant: "link"
-          }, "Open")))
+          }, "Open"))))
         );
       }
     }]);
@@ -34650,8 +34651,7 @@ try {
     _createClass(MovieView, [{
       key: "render",
       value: function render() {
-        var _this$props = this.props, movie = _this$props.movie, removeSelectedMovie = _this$props.removeSelectedMovie;
-        console.log(movie);
+        var movie = this.props.movie;
         if (!movie) return null;
         return (
           /*#__PURE__*/_react["default"].createElement("div", {
@@ -34675,25 +34675,27 @@ try {
             className: "movie-genre"
           }, /*#__PURE__*/_react["default"].createElement("span", {
             className: "label"
-          }, "Genre: "), /*#__PURE__*/_react["default"].createElement("span", {
-            className: "value"
-          }, movie.Genre.Name), /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Link, {
+          }, /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Link, {
             to: ("/genres/").concat(movie.Genre.Name)
           }, /*#__PURE__*/_react["default"].createElement(_Button["default"], {
             variant: "link"
-          }, "Genre"))), /*#__PURE__*/_react["default"].createElement("div", {
+          }, "Genre")), " "), /*#__PURE__*/_react["default"].createElement("span", {
+            className: "value"
+          }, movie.Genre.Name)), /*#__PURE__*/_react["default"].createElement("div", {
             className: "movie-director"
           }, /*#__PURE__*/_react["default"].createElement("span", {
             className: "label"
-          }, "Director: "), /*#__PURE__*/_react["default"].createElement("span", {
-            className: "value"
-          }, movie.Director.Name), /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Link, {
+          }, /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Link, {
             to: ("/directors/").concat(movie.Director.Name)
           }, /*#__PURE__*/_react["default"].createElement(_Button["default"], {
             variant: "link"
-          }, "Director"))), /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Link, {
+          }, "Director"))), /*#__PURE__*/_react["default"].createElement("span", {
+            className: "value"
+          }, movie.Director.Name)), /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Link, {
             to: '/'
-          }, " ", /*#__PURE__*/_react["default"].createElement(_Button["default"], null, "Back"), " "))
+          }, " ", /*#__PURE__*/_react["default"].createElement(_Button["default"], {
+            variant: "dark"
+          }, "Back"), " "))
         );
       }
     }]);
@@ -34701,12 +34703,12 @@ try {
   })(_react["default"].Component);
   exports.MovieView = MovieView;
   MovieView.propTypes = {
-    movies: _propTypes["default"].shape({
+    movie: _propTypes["default"].shape({
       // movie prop may contain Title, and IF it does, it must be a string
       Title: _propTypes["default"].string.isRequired,
       Description: _propTypes["default"].string,
       Year: _propTypes["default"].number,
-      ImageURL: _propTypes["default"].string.isRequired,
+      ImagePath: _propTypes["default"].string.isRequired,
       Genre: _propTypes["default"].shape({
         Name: _propTypes["default"].string,
         Biography: _propTypes["default"].string
@@ -34717,7 +34719,7 @@ try {
         Birthdate: _propTypes["default"].string
       }),
       Featured: _propTypes["default"].bool
-    }).isRequired
+    })
   };
   helpers.postlude(module);
 } finally {
@@ -36123,9 +36125,8 @@ try {
   exports.DirectorView = void 0;
   var _react = _interopRequireDefault(require("react"));
   var _propTypes = _interopRequireDefault(require("prop-types"));
+  var _reactRouterDom = require("react-router-dom");
   var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
-  var _Card = _interopRequireDefault(require("react-bootstrap/Card"));
-  var _movieCard = require("../movie-card/movie-card");
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
       "default": obj
@@ -36215,49 +36216,50 @@ try {
   var DirectorView = /*#__PURE__*/(function (_React$Component) {
     _inherits(DirectorView, _React$Component);
     var _super = _createSuper(DirectorView);
-    function DirectorView(props) {
+    function DirectorView() {
       var _this;
       _classCallCheck(this, DirectorView);
-      _this = _super.call(this, props);
+      _this = _super.call(this);
       _this.state = {};
       return _this;
     }
     _createClass(DirectorView, [{
       key: "render",
       value: function render() {
-        var _this$props = this.props, director = _this$props.director, movies = _this$props.movies;
+        var director = this.props.director;
         if (!director) return null;
         return (
           /*#__PURE__*/_react["default"].createElement("div", {
             className: "director-view"
-          }, /*#__PURE__*/_react["default"].createElement(Container, null, /*#__PURE__*/_react["default"].createElement(_Card["default"], {
-            className: "director-card"
-          }, /*#__PURE__*/_react["default"].createElement(_Card["default"].Body, null, /*#__PURE__*/_react["default"].createElement(_Card["default"].Img, {
-            variant: "top",
-            src: movie.ImagePath
-          }), /*#__PURE__*/_react["default"].createElement(_Card["default"].Title, null, director.Director.Name), /*#__PURE__*/_react["default"].createElement(_Card["default"].Text, null, this.formatDate(director.Director.Birth)), /*#__PURE__*/_react["default"].createElement(_Card["default"].Text, {
-            className: "director-bio"
-          }, director.Director.Bio))), /*#__PURE__*/_react["default"].createElement(_Card["default"], {
-            className: "director-movies"
-          }, /*#__PURE__*/_react["default"].createElement(_Card["default"].Body, null, /*#__PURE__*/_react["default"].createElement(_Card["default"].Title, null, "Movies by ", director.Director.Name, ":"), /*#__PURE__*/_react["default"].createElement(ListGroup, {
-            className: "director-MovieCard"
           }, /*#__PURE__*/_react["default"].createElement("div", {
-            className: "director-movies"
-          }, movies.map(function (movie) {
-            if (movie.Director.Name === director.Director.Name) {
-              return (
-                /*#__PURE__*/_react["default"].createElement(_movieCard.MovieCard, {
-                  key: movie._id,
-                  movie: movie
-                })
-              );
-            }
-          }))))), /*#__PURE__*/_react["default"].createElement(_Card["default"].Footer, null, /*#__PURE__*/_react["default"].createElement(Link, {
-            to: "/"
-          }, /*#__PURE__*/_react["default"].createElement(_Button["default"], {
-            className: "returnButton",
+            className: "director-name"
+          }, /*#__PURE__*/_react["default"].createElement("span", {
+            className: "label"
+          }, "Name: "), /*#__PURE__*/_react["default"].createElement("span", {
+            className: "value"
+          }, director.Director.Name)), /*#__PURE__*/_react["default"].createElement("div", {
+            className: "movie-description"
+          }, /*#__PURE__*/_react["default"].createElement("span", {
+            className: "label"
+          }, "Bio: "), /*#__PURE__*/_react["default"].createElement("span", {
+            className: "value"
+          }, director.Director.Bio)), /*#__PURE__*/_react["default"].createElement("div", {
+            className: "director-birth"
+          }, /*#__PURE__*/_react["default"].createElement("span", {
+            className: "label"
+          }, "Birthdate: "), /*#__PURE__*/_react["default"].createElement("span", {
+            className: "value"
+          }, director.Director.Birth)), /*#__PURE__*/_react["default"].createElement("div", {
+            className: "director-death"
+          }, /*#__PURE__*/_react["default"].createElement("span", {
+            className: "label"
+          }, "Death: "), /*#__PURE__*/_react["default"].createElement("span", {
+            className: "value"
+          }, director.Director.Death)), /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Link, {
+            to: '/'
+          }, " ", /*#__PURE__*/_react["default"].createElement(_Button["default"], {
             variant: "dark"
-          }, "Return to Movie List")))))
+          }, "Back"), " "))
         );
       }
     }]);
@@ -36265,12 +36267,13 @@ try {
   })(_react["default"].Component);
   exports.DirectorView = DirectorView;
   DirectorView.propTypes = {
-    movie: _propTypes["default"].shape({
-      Director: _propTypes["default"].shape({
+    Movie: _propTypes["default"].shape({
+      Director: {
         Name: _propTypes["default"].string.isRequired,
-        Bio: _propTypes["default"].string.isRequired,
-        Birth: _propTypes["default"].instanceOf(Date).isRequired
-      })
+        Bio: _propTypes["default"].string,
+        Birth: _propTypes["default"].number,
+        Death: _propTypes["default"].number
+      }
     })
   };
   helpers.postlude(module);
@@ -36279,7 +36282,7 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","prop-types":"4dfy5","react-bootstrap/Button":"1ru0l","react-bootstrap/Card":"1CZWQ","../movie-card/movie-card":"7v6h3","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl"}],"6FLqj":[function(require,module,exports) {
+},{"react":"3b2NM","prop-types":"4dfy5","react-bootstrap/Button":"1ru0l","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","react-router-dom":"1PMSK"}],"6FLqj":[function(require,module,exports) {
 "use strict";
 var helpers = require("../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
@@ -36305,9 +36308,10 @@ try {
   exports.GenreView = void 0;
   var _react = _interopRequireDefault(require("react"));
   var _propTypes = _interopRequireDefault(require("prop-types"));
-  var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
+  var _reactRouterDom = require("react-router-dom");
+  var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
   var _Card = _interopRequireDefault(require("react-bootstrap/Card"));
-  var _movieCard = require("../movie-card/movie-card");
+  var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
       "default": obj
@@ -36412,34 +36416,23 @@ try {
         return (
           /*#__PURE__*/_react["default"].createElement("div", {
             className: "genre-view"
-          }, /*#__PURE__*/_react["default"].createElement(Container, null, /*#__PURE__*/_react["default"].createElement(_Card["default"], {
-            className: "genre-card"
-          }, /*#__PURE__*/_react["default"].createElement(_Card["default"].Body, null, /*#__PURE__*/_react["default"].createElement(_Card["default"].Img, {
-            variant: "top",
-            src: movie.ImagePath
-          }), /*#__PURE__*/_react["default"].createElement(_Card["default"].Title, null, genre.Genre.Name), /*#__PURE__*/_react["default"].createElement(_Card["default"].Text, {
-            className: "genre-description"
-          }, genre.Genre.Description))), /*#__PURE__*/_react["default"].createElement(_Card["default"], {
-            className: "genre-movies"
-          }, /*#__PURE__*/_react["default"].createElement(_Card["default"].Body, null, /*#__PURE__*/_react["default"].createElement(_Card["default"].Title, null, "Movies by ", genre.Genre.Name, ":"), /*#__PURE__*/_react["default"].createElement(ListGroup, {
-            className: "Genre-MovieCard"
           }, /*#__PURE__*/_react["default"].createElement("div", {
-            className: "Genre-Movies"
-          }, movies.map(function (movie) {
-            if (movie.Genre.Name === genre.Genre.Name.Name) {
-              return (
-                /*#__PURE__*/_react["default"].createElement(_movieCard.MovieCard, {
-                  key: movie._id,
-                  movie: movie
-                })
-              );
-            }
-          }))))), /*#__PURE__*/_react["default"].createElement(_Card["default"].Footer, null, /*#__PURE__*/_react["default"].createElement(Link, {
-            to: "/"
-          }, /*#__PURE__*/_react["default"].createElement(_Button["default"], {
-            className: "returnButton",
+            className: "genre-name"
+          }, /*#__PURE__*/_react["default"].createElement("span", {
+            className: "label"
+          }, "Name: "), /*#__PURE__*/_react["default"].createElement("span", {
+            className: "value"
+          }, genre.Genre.Name, ":")), /*#__PURE__*/_react["default"].createElement("div", {
+            className: "genre-description"
+          }, /*#__PURE__*/_react["default"].createElement("span", {
+            className: "label"
+          }, "Description: "), /*#__PURE__*/_react["default"].createElement("span", {
+            className: "value"
+          }, genre.Genre.Description)), /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Link, {
+            to: '/'
+          }, " ", /*#__PURE__*/_react["default"].createElement(_Button["default"], {
             variant: "dark"
-          }, "Return to Movie List")))))
+          }, "Back"), " "))
         );
       }
     }]);
@@ -36448,10 +36441,10 @@ try {
   exports.GenreView = GenreView;
   GenreView.propTypes = {
     movie: _propTypes["default"].shape({
-      Genre: _propTypes["default"].shape({
-        Name: _propTypes["default"].string.isRequired,
-        Description: _propTypes["default"].string.isRequired
-      })
+      Genre: {
+        Name: _propTypes["default"].string,
+        Description: _propTypes["default"].string
+      }
     })
   };
   helpers.postlude(module);
@@ -36460,7 +36453,50 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","prop-types":"4dfy5","react-bootstrap/Button":"1ru0l","react-bootstrap/Card":"1CZWQ","../movie-card/movie-card":"7v6h3","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl"}],"3CncI":[function(require,module,exports) {
+},{"react":"3b2NM","prop-types":"4dfy5","react-bootstrap/Button":"1ru0l","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","react-router-dom":"1PMSK","react-bootstrap/Container":"3Mt3t","react-bootstrap/Card":"1CZWQ"}],"3Mt3t":[function(require,module,exports) {
+"use strict";
+
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+
+exports.__esModule = true;
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
+
+var _objectWithoutPropertiesLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutPropertiesLoose"));
+
+var _classnames = _interopRequireDefault(require("classnames"));
+
+var _react = _interopRequireDefault(require("react"));
+
+var _ThemeProvider = require("./ThemeProvider");
+
+var defaultProps = {
+  fluid: false
+};
+
+var Container = /*#__PURE__*/_react.default.forwardRef(function (_ref, ref) {
+  var bsPrefix = _ref.bsPrefix,
+      fluid = _ref.fluid,
+      _ref$as = _ref.as,
+      Component = _ref$as === void 0 ? 'div' : _ref$as,
+      className = _ref.className,
+      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "fluid", "as", "className"]);
+  var prefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'container');
+  var suffix = typeof fluid === 'string' ? "-" + fluid : '-fluid';
+  return /*#__PURE__*/_react.default.createElement(Component, (0, _extends2.default)({
+    ref: ref
+  }, props, {
+    className: (0, _classnames.default)(className, fluid ? "" + prefix + suffix : prefix)
+  }));
+});
+
+Container.displayName = 'Container';
+Container.defaultProps = defaultProps;
+var _default = Container;
+exports.default = _default;
+module.exports = exports["default"];
+},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","@babel/runtime/helpers/objectWithoutPropertiesLoose":"3Yx9V","classnames":"5aJRc","react":"3b2NM","./ThemeProvider":"4rz1S"}],"3CncI":[function(require,module,exports) {
 "use strict";
 var helpers = require("../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
@@ -43725,50 +43761,7 @@ DropdownButton.propTypes = propTypes;
 var _default = DropdownButton;
 exports.default = _default;
 module.exports = exports["default"];
-},{"@babel/runtime/helpers/interopRequireWildcard":"28En5","@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","@babel/runtime/helpers/objectWithoutPropertiesLoose":"3Yx9V","react":"3b2NM","prop-types":"4dfy5","./Dropdown":"27PdI","./DropdownToggle":"3wlzX","./DropdownMenu":"2Ipap"}],"3Mt3t":[function(require,module,exports) {
-"use strict";
-
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
-exports.__esModule = true;
-exports.default = void 0;
-
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
-
-var _objectWithoutPropertiesLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutPropertiesLoose"));
-
-var _classnames = _interopRequireDefault(require("classnames"));
-
-var _react = _interopRequireDefault(require("react"));
-
-var _ThemeProvider = require("./ThemeProvider");
-
-var defaultProps = {
-  fluid: false
-};
-
-var Container = /*#__PURE__*/_react.default.forwardRef(function (_ref, ref) {
-  var bsPrefix = _ref.bsPrefix,
-      fluid = _ref.fluid,
-      _ref$as = _ref.as,
-      Component = _ref$as === void 0 ? 'div' : _ref$as,
-      className = _ref.className,
-      props = (0, _objectWithoutPropertiesLoose2.default)(_ref, ["bsPrefix", "fluid", "as", "className"]);
-  var prefix = (0, _ThemeProvider.useBootstrapPrefix)(bsPrefix, 'container');
-  var suffix = typeof fluid === 'string' ? "-" + fluid : '-fluid';
-  return /*#__PURE__*/_react.default.createElement(Component, (0, _extends2.default)({
-    ref: ref
-  }, props, {
-    className: (0, _classnames.default)(className, fluid ? "" + prefix + suffix : prefix)
-  }));
-});
-
-Container.displayName = 'Container';
-Container.defaultProps = defaultProps;
-var _default = Container;
-exports.default = _default;
-module.exports = exports["default"];
-},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","@babel/runtime/helpers/objectWithoutPropertiesLoose":"3Yx9V","classnames":"5aJRc","react":"3b2NM","./ThemeProvider":"4rz1S"}],"5qrP5":[function(require,module,exports) {
+},{"@babel/runtime/helpers/interopRequireWildcard":"28En5","@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","@babel/runtime/helpers/objectWithoutPropertiesLoose":"3Yx9V","react":"3b2NM","prop-types":"4dfy5","./Dropdown":"27PdI","./DropdownToggle":"3wlzX","./DropdownMenu":"2Ipap"}],"5qrP5":[function(require,module,exports) {
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");

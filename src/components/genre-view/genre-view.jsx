@@ -1,63 +1,62 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'react-bootstrap/Button';
+import { Link } from "react-router-dom";
+import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';
 
-import { MovieCard } from '../movie-card/movie-card';
+import Button from 'react-bootstrap/Button';
 
 export class GenreView extends React.Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {};
-    }
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
-    render() {
-        const { genre, movies } = this.props
-        if (!genre) return null;
+  render() {
 
-        return (
+    const { genre, movies } = this.props;
+    if (!genre) return null;
 
-            <div className='genre-view'>
-            <Container>
-                <Card className='genre-card'>
-                    <Card.Body>
-                    <Card.Img variant="top" src={movie.ImagePath} />
-                        <Card.Title>{genre.Genre.Name}</Card.Title>
-                        <Card.Text className='genre-description'>{genre.Genre.Description}</Card.Text>
-                    </Card.Body>
-                </Card>
-                <Card className='genre-movies'>
-                    <Card.Body>
-                        <Card.Title>Movies by {genre.Genre.Name}:</Card.Title>
-                        <ListGroup className='Genre-MovieCard'>
-                            <div className='Genre-Movies'>
-                                {movies.map((movie) => {
-                                    if(movie.Genre.Name === genre.Genre.Name.Name) {
-                                        return (<MovieCard key={movie._id} movie={movie}/>)
-                                    }
-                                })}
-                            </div>
-                        </ListGroup>
-                    </Card.Body>
-                </Card>
-                <Card.Footer>
-                    <Link to={`/`}>
-                        <Button className='returnButton' variant='dark'>Return to Movie List</Button>
-                    </Link>
-                </Card.Footer>
-            </Container>
+    return (
+      <div className="genre-view">
+        <div className="genre-name">
+          <span className="label">Name: </span>
+          <span className="value">{genre.Genre.Name}:</span>
         </div>
-        );
-    }
-       
+        <div className="genre-description">
+          <span className="label">Description: </span>
+          <span className="value">{genre.Genre.Description}</span>
+        </div>
+{/* 
+        <Card className='genre-movies'>
+            <Card.Body>
+              <Card.Title className='genre-movies'>Other {genre.Genre.Name} Movies:</Card.Title>
+                <div className='genre-view-movies'>
+                  {movies.map((m) => {
+                    if (movies.Genre.Name === genre.Genre.Name) {
+                      return (<MovieCard key={movie._id} movie={movies} />)
+                    }
+                  })}
+                </div>
+            </Card.Body>
+          </Card>
+   */}      
+
+
+        <Link to={'/'}> <Button variant="dark">Back</Button> </Link>
+      </div>
+    );
+  }
 }
 
+
+
 GenreView.propTypes = {
-    movie: PropTypes.shape({
-        Genre: PropTypes.shape({
-            Name: PropTypes.string.isRequired,
-            Description: PropTypes.string.isRequired,
-        })
-    })
+  movie: PropTypes.shape({
+    Genre: {
+      Name: PropTypes.string,
+      Description: PropTypes.string
+    }
+  })
 };
