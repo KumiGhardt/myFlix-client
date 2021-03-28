@@ -36127,6 +36127,7 @@ try {
   var _propTypes = _interopRequireDefault(require("prop-types"));
   var _reactRouterDom = require("react-router-dom");
   var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
+  var _Card = _interopRequireDefault(require("react-bootstrap/Card"));
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
       "default": obj
@@ -36226,7 +36227,7 @@ try {
     _createClass(DirectorView, [{
       key: "render",
       value: function render() {
-        var director = this.props.director;
+        var _this$props = this.props, director = _this$props.director, movies = _this$props.movies;
         if (!director) return null;
         return (
           /*#__PURE__*/_react["default"].createElement("div", {
@@ -36255,7 +36256,39 @@ try {
             className: "label"
           }, "Death: "), /*#__PURE__*/_react["default"].createElement("span", {
             className: "value"
-          }, director.Director.Death)), /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Link, {
+          }, director.Director.Death)), /*#__PURE__*/_react["default"].createElement("div", {
+            className: "director-movies"
+          }, /*#__PURE__*/_react["default"].createElement("span", {
+            className: "label"
+          }, "Movies by ", director.Director.Name, ": ")), /*#__PURE__*/_react["default"].createElement("div", {
+            className: "d-flex row mp-6 mx-3"
+          }, movies.map(function (movie) {
+            if (movie.Director.Name === director.Director.Name) {
+              return (
+                /*#__PURE__*/_react["default"].createElement("div", {
+                  key: movie._id
+                }, /*#__PURE__*/_react["default"].createElement(_Card["default"], {
+                  className: "mb-3 mr-2 h-100",
+                  style: {
+                    width: '16rem'
+                  }
+                }, /*#__PURE__*/_react["default"].createElement(_Card["default"].Img, {
+                  variant: "top",
+                  src: movie.ImagePath
+                }), /*#__PURE__*/_react["default"].createElement(_Card["default"].Body, null, /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Link, {
+                  className: "text-muted",
+                  to: ("/movies/").concat(movie._id)
+                }, /*#__PURE__*/_react["default"].createElement(_Card["default"].Title, null, movie.Title)), /*#__PURE__*/_react["default"].createElement(_Card["default"].Text, null, movie.Description.substring(0, 90), "...")), /*#__PURE__*/_react["default"].createElement(_Card["default"].Footer, {
+                  className: "bg-white border-top-0"
+                }, /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Link, {
+                  to: ("/movies/").concat(movie._id)
+                }, /*#__PURE__*/_react["default"].createElement(_Button["default"], {
+                  variant: "link",
+                  className: "read-more-link pl-0"
+                }, "Read more")))))
+              );
+            }
+          })), /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Link, {
             to: '/'
           }, " ", /*#__PURE__*/_react["default"].createElement(_Button["default"], {
             variant: "dark"
@@ -36282,7 +36315,7 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","prop-types":"4dfy5","react-bootstrap/Button":"1ru0l","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","react-router-dom":"1PMSK"}],"6FLqj":[function(require,module,exports) {
+},{"react":"3b2NM","prop-types":"4dfy5","react-bootstrap/Button":"1ru0l","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","react-router-dom":"1PMSK","react-bootstrap/Card":"1CZWQ"}],"6FLqj":[function(require,module,exports) {
 "use strict";
 var helpers = require("../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
@@ -36428,7 +36461,39 @@ try {
             className: "label"
           }, "Description: "), /*#__PURE__*/_react["default"].createElement("span", {
             className: "value"
-          }, genre.Genre.Description)), /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Link, {
+          }, genre.Genre.Description)), /*#__PURE__*/_react["default"].createElement("div", {
+            className: "genre-movies"
+          }, /*#__PURE__*/_react["default"].createElement("span", {
+            className: "label"
+          }, "Movies in the ", genre.Genre.Name, " Genre: ")), /*#__PURE__*/_react["default"].createElement("div", {
+            className: "d-flex row mp-6 mx-3"
+          }, movies.map(function (movie) {
+            if (movie.Genre.Name === genre.Genre.Name) {
+              return (
+                /*#__PURE__*/_react["default"].createElement("div", {
+                  key: movie._id
+                }, /*#__PURE__*/_react["default"].createElement(_Card["default"], {
+                  className: "mb-3 mr-2 h-100",
+                  style: {
+                    width: '16rem'
+                  }
+                }, /*#__PURE__*/_react["default"].createElement(_Card["default"].Img, {
+                  variant: "top",
+                  src: movie.ImagePath
+                }), /*#__PURE__*/_react["default"].createElement(_Card["default"].Body, null, /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Link, {
+                  className: "text-muted",
+                  to: ("/movies/").concat(movie._id)
+                }, /*#__PURE__*/_react["default"].createElement(_Card["default"].Title, null, movie.Title)), /*#__PURE__*/_react["default"].createElement(_Card["default"].Text, null, movie.Description.substring(0, 90), "...")), /*#__PURE__*/_react["default"].createElement(_Card["default"].Footer, {
+                  className: "bg-white border-top-0"
+                }, /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Link, {
+                  to: ("/movies/").concat(movie._id)
+                }, /*#__PURE__*/_react["default"].createElement(_Button["default"], {
+                  variant: "link",
+                  className: "read-more-link pl-0"
+                }, "Read more")))))
+              );
+            }
+          })), /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Link, {
             to: '/'
           }, " ", /*#__PURE__*/_react["default"].createElement(_Button["default"], {
             variant: "dark"

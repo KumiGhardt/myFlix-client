@@ -28,20 +28,48 @@ export class GenreView extends React.Component {
           <span className="label">Description: </span>
           <span className="value">{genre.Genre.Description}</span>
         </div>
-{/* 
-        <Card className='genre-movies'>
-            <Card.Body>
-              <Card.Title className='genre-movies'>Other {genre.Genre.Name} Movies:</Card.Title>
-                <div className='genre-view-movies'>
-                  {movies.map((m) => {
-                    if (movies.Genre.Name === genre.Genre.Name) {
-                      return (<MovieCard key={movie._id} movie={movies} />)
-                    }
-                  })}
-                </div>
-            </Card.Body>
-          </Card>
-   */}      
+      
+        <div className="genre-movies">
+          <span className="label">Movies in the {genre.Genre.Name} Genre: </span>
+        </div>
+
+        <div className="d-flex row mp-6 mx-3">
+            {movies.map((movie) => {
+              if (movie.Genre.Name === genre.Genre.Name) {
+                return (
+                  <div key={movie._id}>
+                    <Card
+                      className="mb-3 mr-2 h-100"
+                      style={{ width: '16rem' }}
+                    >
+                      <Card.Img variant="top" src={movie.ImagePath} />
+                      <Card.Body>
+                        <Link
+                          className="text-muted"
+                          to={`/movies/${movie._id}`}
+                        >
+                          <Card.Title>{movie.Title}</Card.Title>
+                        </Link>
+                        <Card.Text>
+                          {movie.Description.substring(0, 90)}...
+                        </Card.Text>
+                      </Card.Body>
+                      <Card.Footer className="bg-white border-top-0">
+                        <Link to={`/movies/${movie._id}`}>
+                          <Button
+                            variant="link"
+                            className="read-more-link pl-0"
+                          >
+                          Read more
+                          </Button>  
+                        </Link>
+                      </Card.Footer>
+                    </Card>
+                  </div>
+                );
+              }
+            })}
+          </div>
 
 
         <Link to={'/'}> <Button variant="dark">Back</Button> </Link>
