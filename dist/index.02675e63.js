@@ -26592,6 +26592,7 @@ try {
   var _axios = _interopRequireDefault(require("axios"));
   var _propTypes = _interopRequireDefault(require("prop-types"));
   var _Container = _interopRequireDefault(require("react-bootstrap/Container"));
+  var _Row = _interopRequireDefault(require("react-bootstrap/Row"));
   var _Nav = _interopRequireDefault(require("react-bootstrap/Nav"));
   var _Navbar = _interopRequireDefault(require("react-bootstrap/Navbar"));
   var _NavDropdown = _interopRequireDefault(require("react-bootstrap/NavDropdown"));
@@ -26788,27 +26789,17 @@ try {
           })
         );
         return (
-          /*#__PURE__*/_react["default"].createElement(_reactRouterDom.BrowserRouter, null, /*#__PURE__*/_react["default"].createElement(_Container["default"], null, /*#__PURE__*/_react["default"].createElement(_Navbar["default"], {
-            expand: "lg"
-          }, /*#__PURE__*/_react["default"].createElement(_Navbar["default"].Brand, {
+          /*#__PURE__*/_react["default"].createElement(_Container["default"], null, /*#__PURE__*/_react["default"].createElement(_reactRouterDom.BrowserRouter, null, /*#__PURE__*/_react["default"].createElement(_Navbar["default"], null, /*#__PURE__*/_react["default"].createElement(_Navbar["default"].Brand, {
             href: "/"
-          }, "Home"), /*#__PURE__*/_react["default"].createElement(_Navbar["default"].Toggle, {
-            "aria-controls": "basic-navbar-nav"
-          }), /*#__PURE__*/_react["default"].createElement(_Form["default"], {
-            inline: true
-          }, /*#__PURE__*/_react["default"].createElement(_FormControl["default"], {
-            type: "text",
-            placeholder: "Search",
-            className: "mr-sm-2"
-          })), /*#__PURE__*/_react["default"].createElement(_Navbar["default"].Collapse, {
-            id: "basic-navbar-nav"
+          }, "Home"), /*#__PURE__*/_react["default"].createElement(_Navbar["default"].Toggle, null), /*#__PURE__*/_react["default"].createElement(_Navbar["default"].Collapse, {
+            className: "justify-content-end"
           }, /*#__PURE__*/_react["default"].createElement(_Nav["default"], {
-            className: "mr-auto"
+            className: "justify-content-end"
           }, /*#__PURE__*/_react["default"].createElement(_Nav["default"].Link, {
             href: "/users/:username"
           }, "My Account")), /*#__PURE__*/_react["default"].createElement(_Button["default"], {
-            variant: "warning"
-          }, "Log Out")))), /*#__PURE__*/_react["default"].createElement("div", {
+            variant: "secondary"
+          }, "Log Out"))), /*#__PURE__*/_react["default"].createElement(_Row["default"], {
             className: "main-view"
           }, /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Route, {
             exact: true,
@@ -26905,7 +26896,7 @@ try {
                 })
               );
             }
-          })))
+          }))))
         );
       }
     }]);
@@ -26918,7 +26909,7 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","axios":"7rA65","../movie-card/movie-card":"7v6h3","../movie-view/movie-view":"3xBbr","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","../login-view/login-view":"6M7fu","../registration-view/registration-view":"7gvH2","react-router-dom":"1PMSK","../director-view/director-view":"7HF27","../genre-view/genre-view":"6FLqj","../profile-view/profile-view":"3CncI","prop-types":"4dfy5","../main-view/main-view.scss":"3X8QW","react-bootstrap/Container":"3Mt3t","react-bootstrap/Nav":"3T3v1","react-bootstrap/Navbar":"3qLFd","react-bootstrap/NavDropdown":"1qmIy","react-bootstrap/Form":"6A5ko","react-bootstrap/FormControl":"573gP","react-bootstrap/Button":"1ru0l"}],"7rA65":[function(require,module,exports) {
+},{"react":"3b2NM","axios":"7rA65","../movie-card/movie-card":"7v6h3","../movie-view/movie-view":"3xBbr","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","../login-view/login-view":"6M7fu","../registration-view/registration-view":"7gvH2","react-router-dom":"1PMSK","../director-view/director-view":"7HF27","../genre-view/genre-view":"6FLqj","../profile-view/profile-view":"3CncI","prop-types":"4dfy5","../main-view/main-view.scss":"3X8QW","react-bootstrap/Container":"3Mt3t","react-bootstrap/Nav":"3T3v1","react-bootstrap/Navbar":"3qLFd","react-bootstrap/NavDropdown":"1qmIy","react-bootstrap/Form":"6A5ko","react-bootstrap/FormControl":"573gP","react-bootstrap/Button":"1ru0l","react-bootstrap/Row":"3fzwD"}],"7rA65":[function(require,module,exports) {
 module.exports = require('./lib/axios');
 },{"./lib/axios":"4qfhW"}],"4qfhW":[function(require,module,exports) {
 'use strict';
