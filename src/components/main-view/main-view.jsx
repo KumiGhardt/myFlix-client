@@ -114,13 +114,13 @@ export default class MainView extends React.Component {
             <Navbar.Toggle />
             <Navbar.Collapse className="justify-content-end">
               <Nav className="justify-content-end">
-                <Nav.Link href="/users/:username">My Account</Nav.Link>
+                <Nav.Link href={`/users/${user}`}>My Account</Nav.Link>
               </Nav>
               <Button variant="secondary">Log Out</Button>
             </Navbar.Collapse>
           </Navbar>
 
-        
+        {/* movies */}
           <Row className="main-view">
             <Route exact path="/" render={() => {
               if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;

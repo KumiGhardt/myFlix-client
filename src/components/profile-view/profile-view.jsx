@@ -77,6 +77,8 @@ export class ProfileView extends React.Component {
       });
   }
 
+      //change user details
+
   handleUpdate(e, newUsername, newPassword, newEmail, newBirthday) {
     this.setState({
       validated: null,
@@ -98,7 +100,7 @@ export class ProfileView extends React.Component {
 
     axios({
       method: 'put',
-      url: `${'https://kumi-movie-index.herokuapp.com/'}/users/${username}`,
+      url: `${'https://kumi-movie-index.herokuapp.com/'}users/${username}`,
       headers: { Authorization: `Bearer ${token}` },
       data: {
         Username: newUsername ? newUsername : this.state.Username,
@@ -142,6 +144,7 @@ export class ProfileView extends React.Component {
     this.Birthday = input;
   }
 
+  //deregister
   handleDeregister(e) {
     e.preventDefault();
 
@@ -202,14 +205,17 @@ export class ProfileView extends React.Component {
                     })}
                 </div>
             </Card>
+            <Button variant="success">Add Movie</Button>
+            <Button variant="light">Remove Movie</Button>
+
           </Tab>
 
 
           <Tab className='tab-item' eventKey='update' title='Update'>
             <Card className='update-card' border='info'>
                 <Card.Title className='profile-title'>Update Profile</Card.Title>
-                <Card.Subtitle className='card-subtitle-update'>Please leave any fields not being updated empty.
-                  <span className='password-instructions'>*You must enter in either a new or existing password to verify the change!</span>
+                <Card.Subtitle className='card-subtitle-update'>Please leave any fields not being updated empty. 
+                  <span className='password-instructions'> *You must enter in either a new or existing password to verify the change!</span>
                 </Card.Subtitle>
                 <Card.Body>
                 <Form noValidate validated={validated} className='update-form' onSubmit={(e) => this.handleUpdate(e, this.Username, this.Password, this.Email, this.Birthday)}>

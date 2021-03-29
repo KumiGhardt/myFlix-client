@@ -26796,7 +26796,7 @@ try {
           }, /*#__PURE__*/_react["default"].createElement(_Nav["default"], {
             className: "justify-content-end"
           }, /*#__PURE__*/_react["default"].createElement(_Nav["default"].Link, {
-            href: "/users/:username"
+            href: ("/users/").concat(user)
           }, "My Account")), /*#__PURE__*/_react["default"].createElement(_Button["default"], {
             variant: "secondary"
           }, "Log Out"))), /*#__PURE__*/_react["default"].createElement(_Row["default"], {
@@ -36765,7 +36765,8 @@ try {
       }
     }, {
       key: "handleUpdate",
-      value: function handleUpdate(e, newUsername, newPassword, newEmail, newBirthday) {
+      value: // change user details
+      function handleUpdate(e, newUsername, newPassword, newEmail, newBirthday) {
         var _this4 = this;
         this.setState({
           validated: null
@@ -36784,7 +36785,7 @@ try {
         var username = localStorage.getItem('user');
         (0, _axios["default"])({
           method: 'put',
-          url: ('https://kumi-movie-index.herokuapp.com/').concat("/users/", username),
+          url: ('https://kumi-movie-index.herokuapp.com/').concat("users/", username),
           headers: {
             Authorization: ("Bearer ").concat(token)
           },
@@ -36831,7 +36832,8 @@ try {
       }
     }, {
       key: "handleDeregister",
-      value: function handleDeregister(e) {
+      value: // deregister
+      function handleDeregister(e) {
         e.preventDefault();
         var token = localStorage.getItem('token');
         var username = localStorage.getItem('user');
@@ -36911,7 +36913,11 @@ try {
                 }, "Remove"))))
               );
             }
-          })))), /*#__PURE__*/_react["default"].createElement(_reactBootstrap.Tab, {
+          }))), /*#__PURE__*/_react["default"].createElement(_reactBootstrap.Button, {
+            variant: "success"
+          }, "Add Movie"), /*#__PURE__*/_react["default"].createElement(_reactBootstrap.Button, {
+            variant: "light"
+          }, "Remove Movie")), /*#__PURE__*/_react["default"].createElement(_reactBootstrap.Tab, {
             className: "tab-item",
             eventKey: "update",
             title: "Update"
@@ -36924,7 +36930,7 @@ try {
             className: "card-subtitle-update"
           }, "Please leave any fields not being updated empty.", /*#__PURE__*/_react["default"].createElement("span", {
             className: "password-instructions"
-          }, "*You must enter in either a new or existing password to verify the change!")), /*#__PURE__*/_react["default"].createElement(_reactBootstrap.Card.Body, null, /*#__PURE__*/_react["default"].createElement(_reactBootstrap.Form, {
+          }, " *You must enter in either a new or existing password to verify the change!")), /*#__PURE__*/_react["default"].createElement(_reactBootstrap.Card.Body, null, /*#__PURE__*/_react["default"].createElement(_reactBootstrap.Form, {
             noValidate: true,
             validated: validated,
             className: "update-form",
