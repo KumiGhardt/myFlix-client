@@ -36913,11 +36913,7 @@ try {
                 }, "Remove"))))
               );
             }
-          }))), /*#__PURE__*/_react["default"].createElement(_reactBootstrap.Button, {
-            variant: "success"
-          }, "Add Movie"), /*#__PURE__*/_react["default"].createElement(_reactBootstrap.Button, {
-            variant: "light"
-          }, "Remove Movie")), /*#__PURE__*/_react["default"].createElement(_reactBootstrap.Tab, {
+          })))), /*#__PURE__*/_react["default"].createElement(_reactBootstrap.Tab, {
             className: "tab-item",
             eventKey: "update",
             title: "Update"

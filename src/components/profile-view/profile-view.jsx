@@ -205,8 +205,6 @@ export class ProfileView extends React.Component {
                     })}
                 </div>
             </Card>
-            <Button variant="success">Add Movie</Button>
-            <Button variant="light">Remove Movie</Button>
 
           </Tab>
 
