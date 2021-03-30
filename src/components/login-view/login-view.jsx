@@ -7,6 +7,7 @@ import axios from 'axios';
 
 
 export function LoginView(props) {
+
     //call the useState() method (imported from React) with an empty string This method returns an array that you destructure (break down into variables)
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -16,13 +17,14 @@ export function LoginView(props) {
         /* Send a request to the server for authentication */
         axios.post('https://kumi-movie-index.herokuapp.com/login', {
             Username: username,
-            Password: password
+            Password: password,
         })
             .then(response => {
                 const data = response.data;
                 props.onLoggedIn(data);
             })
             .catch(e => {
+                alert('Your details are incorrect');
                 console.log(e.response);
             });
     };
@@ -44,11 +46,3 @@ export function LoginView(props) {
         </Form>
     );
 }
-LoginView.propTypes = {
-    user: PropTypes.shape({
-        username: PropTypes.string.isRequired,
-        pasword: PropTypes.string.isRequired
-    }).isRequired,
-    onLoggedIn: PropTypes.func.isRequired,
-    onRegister: PropTypes.func
-};

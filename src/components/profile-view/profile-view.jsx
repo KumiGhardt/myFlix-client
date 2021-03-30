@@ -2,8 +2,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import axios from 'axios';
-import { Link } from 'react-router-dom'
-
+import { Link } from 'react-router-dom';
 
 import {
     Form, 
@@ -59,6 +58,7 @@ export class ProfileView extends React.Component {
       });
   }
 
+  
   handleRemoveFavorite(e, movie) {
     e.preventDefault();
     const username = localStorage.getItem('user');
@@ -128,6 +128,27 @@ export class ProfileView extends React.Component {
       });
   }
 
+  //DOES NOT WORK- WHY
+  //deregister
+  handleDeregister() {
+    const token = localStorage.getItem('token');
+    const user = localStorage.getItem("user");
+    axios
+      .delete(`https://kumi-movie-index.herokuapp.com/users/${user}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(() => {
+        localStorage.removeItem('user');
+        localStorage.removeItem('token');
+        alert('Your account has been deleted');
+        // this.props.history.push(`/`);
+        window.location.pathname = `/`
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
   setUsername(input) {
     this.Username = input;
   }
@@ -144,31 +165,10 @@ export class ProfileView extends React.Component {
     this.Birthday = input;
   }
 
-  //deregister
-  handleDeregister(e) {
-    e.preventDefault();
-
-    const token = localStorage.getItem('token');
-    const username = localStorage.getItem('user');
-
-    axios
-      .delete(`${Config.API_URL}/users/${username}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then(() => {
-        localStorage.removeItem('user');
-        localStorage.removeItem('token');
-        alert('Your account has been deleted');
-        // this.props.history.push(`/`);
-        window.location.pathname = `/`
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  }
+  
 
   render() {
-    const { movies, FavoriteMovies, validated } = this.state;
+    const { movies, FavoriteMovies, user, validated } = this.state;
     const username = localStorage.getItem('user');
 
     return (

@@ -26,7 +26,7 @@ import { DirectorView } from "../director-view/director-view";
 import { GenreView } from "../genre-view/genre-view";
 import { ProfileView } from "../profile-view/profile-view";
 
-
+//components states
 export default class MainView extends React.Component {
   constructor(props) {
     super(props);
@@ -34,10 +34,7 @@ export default class MainView extends React.Component {
     this.state = {
       movies: [],
       selectedMovie: null,
-      user: {
-        username: null,
-        password: null
-      },
+      user: '',
       register: null,
     };
   }
@@ -52,29 +49,25 @@ export default class MainView extends React.Component {
     }
   }
 
-  /*When a movie is clicked, this function is invoked and updates the state of the `selectedMovie` *property to that movie*/
-  onMovieClick(movie) {
-    this.setState({
-      selectedMovie: movie,
-    });
-  }
-
-  onRegister(register) {
-    this.setState({
-      register,
-    });
-  }
-
   /* When a user successfully logs in, this function updates the `user` property in state to that *particular user*/
   onLoggedIn(authData) {
     console.log(authData);
     this.setState({
       user: authData.user.Username
     });
-
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
+  }
+
+  logOut() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.setState({
+      user: null
+    });
+    alert('You have logged out');
+    window.open('/', '_self');
   }
 
   //make a GET request to heroku.
@@ -94,13 +87,26 @@ export default class MainView extends React.Component {
       });
   }
 
+  /*When a movie is clicked, this function is invoked and updates the state of the `selectedMovie` *property to that movie*/
+  onMovieClick(movie) {
+    this.setState({
+      selectedMovie: movie,
+    });
+  }
+
+  onRegister(register) {
+    this.setState({
+      register,
+    });
+  }
+ 
 
   render() {
     //destructure
     const { movies, selectedMovie, user, register } = this.state;
 
     /* If there is no user, the LoginView is rendered. If there is a user logged in, the user details are *passed as a prop to the LoginView*/
-    if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
+    if (!user) return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
 
     // Before the movies have been loaded
     if (!movies) return <div className="main-view" />;
@@ -116,7 +122,7 @@ export default class MainView extends React.Component {
               <Nav className="justify-content-end">
                 <Nav.Link href={`/users/${user}`}>My Account</Nav.Link>
               </Nav>
-              <Button variant="secondary">Log Out</Button>
+              <Button onClick={() => this.logOut()} variant="secondary">Log Out</Button>
             </Navbar.Collapse>
           </Navbar>
 

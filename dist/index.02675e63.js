@@ -26693,6 +26693,7 @@ try {
     };
     return _getPrototypeOf(o);
   }
+  // components states
   var MainView = /*#__PURE__*/(function (_React$Component) {
     _inherits(MainView, _React$Component);
     var _super = _createSuper(MainView);
@@ -26704,10 +26705,7 @@ try {
       _this.state = {
         movies: [],
         selectedMovie: null,
-        user: {
-          username: null,
-          password: null
-        },
+        user: '',
         register: null
       };
       return _this;
@@ -26724,21 +26722,6 @@ try {
         }
       }
     }, {
-      key: "onMovieClick",
-      value: /*When a movie is clicked, this function is invoked and updates the state of the `selectedMovie` *property to that movie*/
-      function onMovieClick(movie) {
-        this.setState({
-          selectedMovie: movie
-        });
-      }
-    }, {
-      key: "onRegister",
-      value: function onRegister(register) {
-        this.setState({
-          register: register
-        });
-      }
-    }, {
       key: "onLoggedIn",
       value: /*When a user successfully logs in, this function updates the `user` property in state to that *particular user*/
       function onLoggedIn(authData) {
@@ -26749,6 +26732,17 @@ try {
         localStorage.setItem('token', authData.token);
         localStorage.setItem('user', authData.user.Username);
         this.getMovies(authData.token);
+      }
+    }, {
+      key: "logOut",
+      value: function logOut() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        this.setState({
+          user: null
+        });
+        alert('You have logged out');
+        window.open('/', '_self');
       }
     }, {
       key: "getMovies",
@@ -26766,6 +26760,21 @@ try {
           });
         })["catch"](function (error) {
           console.log(error);
+        });
+      }
+    }, {
+      key: "onMovieClick",
+      value: /*When a movie is clicked, this function is invoked and updates the state of the `selectedMovie` *property to that movie*/
+      function onMovieClick(movie) {
+        this.setState({
+          selectedMovie: movie
+        });
+      }
+    }, {
+      key: "onRegister",
+      value: function onRegister(register) {
+        this.setState({
+          register: register
         });
       }
     }, {
@@ -26798,6 +26807,9 @@ try {
           }, /*#__PURE__*/_react["default"].createElement(_Nav["default"].Link, {
             href: ("/users/").concat(user)
           }, "My Account")), /*#__PURE__*/_react["default"].createElement(_Button["default"], {
+            onClick: function onClick() {
+              return _this3.logOut();
+            },
             variant: "secondary"
           }, "Log Out"))), /*#__PURE__*/_react["default"].createElement(_Row["default"], {
             className: "main-view"
@@ -34881,6 +34893,7 @@ try {
         var data = response.data;
         props.onLoggedIn(data);
       })["catch"](function (e) {
+        alert('Your details are incorrect');
         console.log(e.response);
       });
     };
@@ -34910,14 +34923,6 @@ try {
   }
   _s2(LoginView, "wuQOK7xaXdVz4RMrZQhWbI751Oc=");
   _c = LoginView;
-  LoginView.propTypes = {
-    user: _propTypes["default"].shape({
-      username: _propTypes["default"].string.isRequired,
-      pasword: _propTypes["default"].string.isRequired
-    }).isRequired,
-    onLoggedIn: _propTypes["default"].func.isRequired,
-    onRegister: _propTypes["default"].func
-  };
   var _c;
   $RefreshReg$(_c, "LoginView");
   helpers.postlude(module);
@@ -36811,6 +36816,27 @@ try {
         });
       }
     }, {
+      key: "handleDeregister",
+      value: // DOES NOT WORK- WHY
+      // deregister
+      function handleDeregister() {
+        var token = localStorage.getItem('token');
+        var user = localStorage.getItem("user");
+        _axios["default"]["delete"](("https://kumi-movie-index.herokuapp.com/users/").concat(user), {
+          headers: {
+            Authorization: ("Bearer ").concat(token)
+          }
+        }).then(function () {
+          localStorage.removeItem('user');
+          localStorage.removeItem('token');
+          alert('Your account has been deleted');
+          // this.props.history.push(`/`);
+          window.location.pathname = "/";
+        })["catch"](function (e) {
+          console.log(e);
+        });
+      }
+    }, {
       key: "setUsername",
       value: function setUsername(input) {
         this.Username = input;
@@ -36831,31 +36857,10 @@ try {
         this.Birthday = input;
       }
     }, {
-      key: "handleDeregister",
-      value: // deregister
-      function handleDeregister(e) {
-        e.preventDefault();
-        var token = localStorage.getItem('token');
-        var username = localStorage.getItem('user');
-        _axios["default"]["delete"](("").concat(Config.API_URL, "/users/").concat(username), {
-          headers: {
-            Authorization: ("Bearer ").concat(token)
-          }
-        }).then(function () {
-          localStorage.removeItem('user');
-          localStorage.removeItem('token');
-          alert('Your account has been deleted');
-          // this.props.history.push(`/`);
-          window.location.pathname = "/";
-        })["catch"](function (e) {
-          console.log(e);
-        });
-      }
-    }, {
       key: "render",
       value: function render() {
         var _this5 = this;
-        var _this$state = this.state, movies = _this$state.movies, FavoriteMovies = _this$state.FavoriteMovies, validated = _this$state.validated;
+        var _this$state = this.state, movies = _this$state.movies, FavoriteMovies = _this$state.FavoriteMovies, user = _this$state.user, validated = _this$state.validated;
         var username = localStorage.getItem('user');
         return (
           /*#__PURE__*/_react["default"].createElement(_reactBootstrap.Container, {
