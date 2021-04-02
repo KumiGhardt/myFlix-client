@@ -58,7 +58,7 @@ export class ProfileView extends React.Component {
       });
   }
 
-  
+  // favourites should be in a seperate component
   handleRemoveFavorite(e, movie) {
     e.preventDefault();
     const username = localStorage.getItem('user');
@@ -128,7 +128,7 @@ export class ProfileView extends React.Component {
       });
   }
 
-  //DOES NOT WORK- WHY
+  
   //deregister
   handleDeregister() {
     const token = localStorage.getItem('token');

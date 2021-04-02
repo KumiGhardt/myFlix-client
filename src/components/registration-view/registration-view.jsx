@@ -12,12 +12,13 @@ export function RegistrationView(props) {
     const [email, setEmail] = useState('');
     const [birthday, setBirthday] = useState('');
 
+    /* REVIEW
     const swapView = (e) => {
         e.preventDefault();
         history.push(`/login`);
         // window.location.pathname = `/login`
     }
-
+*/
     const handleRegister = (e) => {
         e.preventDefault();
         // sends request to server for authentication

@@ -4,6 +4,11 @@ import {
   Route,
 } from "react-router-dom";
 import axios from "axios";
+import { connect } from 'react-redux';
+
+// #0
+import { setMovies } from '../../actions/actions';
+
 import PropTypes from 'prop-types';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -16,7 +21,7 @@ import Button from 'react-bootstrap/Button';
 
 import '../main-view/main-view.scss';
 
-
+import MoviesList from '../movies-list/movies-list';
 //reusable movie-card components
 import { LoginView } from "../login-view/login-view";
 import { MovieCard } from "../movie-card/movie-card";
@@ -27,14 +32,14 @@ import { GenreView } from "../genre-view/genre-view";
 import { ProfileView } from "../profile-view/profile-view";
 
 //components states
-export default class MainView extends React.Component {
+export class MainView extends React.Component {
   constructor(props) {
     super(props);
     // props
     this.state = {
       movies: [],
       selectedMovie: null,
-      user: '',
+      user: null,
       register: null,
     };
   }
@@ -77,10 +82,8 @@ export default class MainView extends React.Component {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
-        // Assign the result to the state
-        this.setState({
-          movies: response.data
-        });
+        // #1
+        this.props.setMovies(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -99,18 +102,22 @@ export default class MainView extends React.Component {
       register,
     });
   }
- 
+
 
   render() {
+
+    // #2
+    let { movies } = this.props;
+    let { user } = this.state;
+
     //destructure
-    const { movies, selectedMovie, user, register } = this.state;
+    const { selectedMovie, register } = this.state;
 
     /* If there is no user, the LoginView is rendered. If there is a user logged in, the user details are *passed as a prop to the LoginView*/
     if (!user) return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
 
     // Before the movies have been loaded
     if (!movies) return <div className="main-view" />;
-
 
     return (
       <Container>
@@ -126,13 +133,12 @@ export default class MainView extends React.Component {
             </Navbar.Collapse>
           </Navbar>
 
-        {/* movies */}
+          {/* movies */}
           <Row className="main-view">
             <Route exact path="/" render={() => {
               if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-              return movies.map(m => <MovieCard key={m._id} movie={m} />)
+              return <MoviesList movies={movies} />;
             }} />
-
             <Route path="/register" render={() => <RegistrationView />} />
             {/* if (!register) return <RegistrationView onRegister={(register) => this.onRegister(register)} /> */}
 
@@ -149,10 +155,10 @@ export default class MainView extends React.Component {
             }} />
 
             <Route exact path='/users/:username'
-              render={({ history }) => {
+              render={() => {
                 if (!user) return <LoginView onLoggedIn={(data) => this.onLoggedIn(data)} />;
                 if (movies.length === 0) return;
-                return <ProfileView history={history} movies={movies} />
+                return <ProfileView movies={movies} />
               }} />
           </Row>
         </Router>
@@ -160,4 +166,10 @@ export default class MainView extends React.Component {
     );
   }
 }
+// #3
+let mapStateToProps = state => {
+  return { movies: state.movies }
+}
 
+// #4
+export default connect(mapStateToProps, { setMovies })(MainView);
