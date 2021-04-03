@@ -134,6 +134,7 @@ export class MainView extends React.Component {
           </Navbar>
 
           {/* movies */}
+          
           <Row className="main-view">
             <Route exact path="/" render={() => {
               if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
@@ -161,6 +162,7 @@ export class MainView extends React.Component {
                 return <ProfileView movies={movies} />
               }} />
           </Row>
+          
         </Router>
       </Container>
     );

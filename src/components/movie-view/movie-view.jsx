@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from "axios";
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
@@ -9,7 +10,27 @@ export class MovieView extends React.Component {
     super();
     this.state = {};
   }
+  addFavoriteMovie(movie) {
+    let token = localStorage.getItem("token");
+    let url =
+      "https://kumi-movie-index.herokuapp.com/users/" +
+      localStorage.getItem("user") +
+      "/movies/" +
+      movie._id;
 
+    console.log(token);
+
+    axios
+      .post(url, "", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        console.log(response);
+        // window.open("/", "_self");
+        window.open("/users/" + localStorage.getItem("user"), "_self");
+        alert("Added to favorites!");
+      });
+  }
 
   render() {
     const { movie } = this.props;
@@ -44,8 +65,9 @@ export class MovieView extends React.Component {
 
         </div>
         <Link to={'/'}> <Button variant="dark">Back</Button> </Link>
+        <Button variant="info" onClick={() => this.addFavoriteMovie(movie)}>Favorite</Button>
       </div>
-
+      
     );
   }
 }

@@ -28708,6 +28708,7 @@ try {
   });
   exports.MovieView = void 0;
   var _react = _interopRequireDefault(require("react"));
+  var _axios = _interopRequireDefault(require("axios"));
   var _propTypes = _interopRequireDefault(require("prop-types"));
   var _reactRouterDom = require("react-router-dom");
   var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
@@ -28808,8 +28809,26 @@ try {
       return _this;
     }
     _createClass(MovieView, [{
+      key: "addFavoriteMovie",
+      value: function addFavoriteMovie(movie) {
+        var token = localStorage.getItem("token");
+        var url = "https://kumi-movie-index.herokuapp.com/users/" + localStorage.getItem("user") + "/movies/" + movie._id;
+        console.log(token);
+        _axios["default"].post(url, "", {
+          headers: {
+            Authorization: ("Bearer ").concat(token)
+          }
+        }).then(function (response) {
+          console.log(response);
+          // window.open("/", "_self");
+          window.open("/users/" + localStorage.getItem("user"), "_self");
+          alert("Added to favorites!");
+        });
+      }
+    }, {
       key: "render",
       value: function render() {
+        var _this2 = this;
         var movie = this.props.movie;
         if (!movie) return null;
         return (
@@ -28854,7 +28873,12 @@ try {
             to: '/'
           }, " ", /*#__PURE__*/_react["default"].createElement(_Button["default"], {
             variant: "dark"
-          }, "Back"), " "))
+          }, "Back"), " "), /*#__PURE__*/_react["default"].createElement(_Button["default"], {
+            variant: "info",
+            onClick: function onClick() {
+              return _this2.addFavoriteMovie(movie);
+            }
+          }, "Favorite"))
         );
       }
     }]);
@@ -28886,7 +28910,7 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","prop-types":"4dfy5","react-router-dom":"1PMSK","react-bootstrap/Button":"1ru0l"}],"1HHwl":[function(require,module,exports) {
+},{"react":"3b2NM","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","prop-types":"4dfy5","react-router-dom":"1PMSK","react-bootstrap/Button":"1ru0l","axios":"7rA65"}],"1HHwl":[function(require,module,exports) {
 "use strict";
 var Refresh = require('react-refresh/runtime');
 function debounce(func, delay) {
@@ -36632,6 +36656,7 @@ try {
   var _propTypes = _interopRequireDefault(require("prop-types"));
   var _axios = _interopRequireDefault(require("axios"));
   var _reactRouterDom = require("react-router-dom");
+  var _moviesList = _interopRequireDefault(require("../movies-list/movies-list"));
   var _reactBootstrap = require("react-bootstrap");
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -36771,6 +36796,23 @@ try {
         });
       }
     }, {
+      key: "addFavoriteMovie",
+      value: function addFavoriteMovie(movie) {
+        var token = localStorage.getItem("token");
+        var url = "https://kumi-movie-index.herokuapp.com/users/" + localStorage.getItem("user") + "/movies/" + movie._id;
+        console.log(token);
+        _axios["default"].post(url, "", {
+          headers: {
+            Authorization: ("Bearer ").concat(token)
+          }
+        }).then(function (response) {
+          console.log(response);
+          // window.open("/", "_self");
+          window.open("/users/" + localStorage.getItem("user"), "_self");
+          alert("Added to favorites!");
+        });
+      }
+    }, {
       key: "handleRemoveFavorite",
       value: // favourites should be in a seperate component
       function handleRemoveFavorite(e, movie) {
@@ -36778,7 +36820,7 @@ try {
         e.preventDefault();
         var username = localStorage.getItem('user');
         var token = localStorage.getItem('token');
-        _axios["default"]["delete"](("").concat(Config.API_URL, "/users/").concat(username, "/FavoriteMovies/").concat(movie), {
+        _axios["default"]["delete"](("https://kumi-movie-index.herokuapp.com/users/").concat(username, "/FavoriteMovies/").concat(movie), {
           headers: {
             Authorization: ("Bearer ").concat(token)
           }
@@ -36880,8 +36922,15 @@ try {
       key: "render",
       value: function render() {
         var _this5 = this;
-        var _this$state = this.state, movies = _this$state.movies, FavoriteMovies = _this$state.FavoriteMovies, user = _this$state.user, validated = _this$state.validated;
+        var _this$state = this.state, movies = _this$state.movies, user = _this$state.user, validated = _this$state.validated;
         var username = localStorage.getItem('user');
+        var FavoriteMovies = this.state.movies.map(function (movies) {
+          return (
+            /*#__PURE__*/_react["default"].createElement("div", {
+              key: movie._id
+            })
+          );
+        });
         return (
           /*#__PURE__*/_react["default"].createElement(_reactBootstrap.Container, {
             className: "profile-view"
@@ -37056,7 +37105,7 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","prop-types":"4dfy5","axios":"7rA65","react-router-dom":"1PMSK","react-bootstrap":"4n7hB","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl"}],"4n7hB":[function(require,module,exports) {
+},{"react":"3b2NM","prop-types":"4dfy5","axios":"7rA65","react-router-dom":"1PMSK","react-bootstrap":"4n7hB","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","../movies-list/movies-list":"3Biek"}],"4n7hB":[function(require,module,exports) {
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -48459,7 +48508,73 @@ Tooltip.displayName = 'Tooltip';
 var _default = Tooltip;
 exports.default = _default;
 module.exports = exports["default"];
-},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","@babel/runtime/helpers/objectWithoutPropertiesLoose":"3Yx9V","classnames":"5aJRc","react":"3b2NM","prop-types-extra/lib/isRequiredForA11y":"4XrEc","./ThemeProvider":"4rz1S"}],"3X8QW":[function() {},{}],"7GDa4":[function(require,module,exports) {
+},{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","@babel/runtime/helpers/objectWithoutPropertiesLoose":"3Yx9V","classnames":"5aJRc","react":"3b2NM","prop-types-extra/lib/isRequiredForA11y":"4XrEc","./ThemeProvider":"4rz1S"}],"3Biek":[function(require,module,exports) {
+"use strict";
+var helpers = require("../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var prevRefreshReg = window.$RefreshReg$;
+var prevRefreshSig = window.$RefreshSig$;
+helpers.prelude(module);
+try {
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports["default"] = void 0;
+  var _react = _interopRequireDefault(require("react"));
+  var _reactRedux = require("react-redux");
+  var _Row = _interopRequireDefault(require("react-bootstrap/Row"));
+  var _visibilityFilterInput = _interopRequireDefault(require("../visibility-filter-input/visibility-filter-input"));
+  var _movieCard = require("../movie-card/movie-card");
+  function _interopRequireDefault(obj) {
+    return obj && obj.__esModule ? obj : {
+      "default": obj
+    };
+  }
+  var mapStateToProps = function mapStateToProps(state) {
+    var visibilityFilter = state.visibilityFilter;
+    return {
+      visibilityFilter: visibilityFilter
+    };
+  };
+  function MoviesList(props) {
+    var movies = props.movies, visibilityFilter = props.visibilityFilter;
+    var filteredMovies = movies;
+    if (visibilityFilter !== '') {
+      filteredMovies = movies.filter(function (m) {
+        return m.Title.includes(visibilityFilter);
+      });
+    }
+    if (!movies) return (
+      /*#__PURE__*/_react["default"].createElement("div", {
+        className: "main-view"
+      })
+    );
+    return (
+      /*#__PURE__*/_react["default"].createElement("div", {
+        className: "movies-list"
+      }, /*#__PURE__*/_react["default"].createElement(_Row["default"], null, /*#__PURE__*/_react["default"].createElement(_visibilityFilterInput["default"], {
+        visibilityFilter: visibilityFilter
+      }), filteredMovies.map(function (m) {
+        return (
+          /*#__PURE__*/_react["default"].createElement(_movieCard.MovieCard, {
+            key: m._id,
+            movie: m
+          })
+        );
+      })))
+    );
+  }
+  _c = MoviesList;
+  var _default = (0, _reactRedux.connect)(mapStateToProps)(MoviesList);
+  exports["default"] = _default;
+  var _c;
+  $RefreshReg$(_c, "MoviesList");
+  helpers.postlude(module);
+} finally {
+  window.$RefreshReg$ = prevRefreshReg;
+  window.$RefreshSig$ = prevRefreshSig;
+}
+
+},{"react":"3b2NM","react-redux":"7GDa4","../visibility-filter-input/visibility-filter-input":"3SRLP","../movie-card/movie-card":"7v6h3","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl","react-bootstrap/Row":"3fzwD"}],"7GDa4":[function(require,module,exports) {
 "use strict";
 
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
@@ -50453,109 +50568,7 @@ exports.unstable_batchedUpdates = void 0;
 var _reactDom = require("react-dom");
 
 exports.unstable_batchedUpdates = _reactDom.unstable_batchedUpdates;
-},{"react-dom":"2sg1U"}],"5S6cN":[function(require,module,exports) {
-"use strict";
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.setMovies = setMovies;
-exports.setFilter = setFilter;
-exports.setUSER = setUSER;
-exports.SET_USER = exports.SET_FILTER = exports.SET_MOVIES = void 0;
-// initializes the movies list with movies
-var SET_MOVIES = 'SET_MOVIES';
-exports.SET_MOVIES = SET_MOVIES;
-// filters movies list
-var SET_FILTER = 'SET_FILTER';
-exports.SET_FILTER = SET_FILTER;
-// filters users
-var SET_USER = 'SET_USER';
-exports.SET_USER = SET_USER;
-function setMovies(value) {
-  return {
-    type: SET_MOVIES,
-    value: value
-  };
-}
-function setFilter(value) {
-  return {
-    type: SET_FILTER,
-    value: value
-  };
-}
-function setUSER(value) {
-  return {
-    type: SET_USER,
-    value: value
-  };
-}
-
-},{}],"3Biek":[function(require,module,exports) {
-"use strict";
-var helpers = require("../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
-var prevRefreshReg = window.$RefreshReg$;
-var prevRefreshSig = window.$RefreshSig$;
-helpers.prelude(module);
-try {
-  Object.defineProperty(exports, "__esModule", {
-    value: true
-  });
-  exports["default"] = void 0;
-  var _react = _interopRequireDefault(require("react"));
-  var _reactRedux = require("react-redux");
-  var _visibilityFilterInput = _interopRequireDefault(require("../visibility-filter-input/visibility-filter-input"));
-  var _movieCard = require("../movie-card/movie-card");
-  function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-      "default": obj
-    };
-  }
-  var mapStateToProps = function mapStateToProps(state) {
-    var visibilityFilter = state.visibilityFilter;
-    return {
-      visibilityFilter: visibilityFilter
-    };
-  };
-  function MoviesList(props) {
-    var movies = props.movies, visibilityFilter = props.visibilityFilter;
-    var filteredMovies = movies;
-    if (visibilityFilter !== '') {
-      filteredMovies = movies.filter(function (m) {
-        return m.Title.includes(visibilityFilter);
-      });
-    }
-    if (!movies) return (
-      /*#__PURE__*/_react["default"].createElement("div", {
-        className: "main-view"
-      })
-    );
-    return (
-      /*#__PURE__*/_react["default"].createElement("div", {
-        className: "movies-list"
-      }, /*#__PURE__*/_react["default"].createElement(_visibilityFilterInput["default"], {
-        visibilityFilter: visibilityFilter
-      }), filteredMovies.map(function (m) {
-        return (
-          /*#__PURE__*/_react["default"].createElement(_movieCard.MovieCard, {
-            key: m._id,
-            movie: m
-          })
-        );
-      }))
-    );
-  }
-  _c = MoviesList;
-  var _default = (0, _reactRedux.connect)(mapStateToProps)(MoviesList);
-  exports["default"] = _default;
-  var _c;
-  $RefreshReg$(_c, "MoviesList");
-  helpers.postlude(module);
-} finally {
-  window.$RefreshReg$ = prevRefreshReg;
-  window.$RefreshSig$ = prevRefreshSig;
-}
-
-},{"react":"3b2NM","react-redux":"7GDa4","../visibility-filter-input/visibility-filter-input":"3SRLP","../movie-card/movie-card":"7v6h3","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl"}],"3SRLP":[function(require,module,exports) {
+},{"react-dom":"2sg1U"}],"3SRLP":[function(require,module,exports) {
 "use strict";
 var helpers = require("../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
@@ -50600,7 +50613,44 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","prop-types":"4dfy5","react-redux":"7GDa4","react-bootstrap/Form":"6A5ko","../../actions/actions":"5S6cN","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl"}],"5iJih":[function() {},{}],"3vUkb":[function(require,module,exports) {
+},{"react":"3b2NM","prop-types":"4dfy5","react-redux":"7GDa4","react-bootstrap/Form":"6A5ko","../../actions/actions":"5S6cN","../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"1HHwl"}],"5S6cN":[function(require,module,exports) {
+"use strict";
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.setMovies = setMovies;
+exports.setFilter = setFilter;
+exports.setUSER = setUSER;
+exports.SET_USER = exports.SET_FILTER = exports.SET_MOVIES = void 0;
+// initializes the movies list with movies
+var SET_MOVIES = 'SET_MOVIES';
+exports.SET_MOVIES = SET_MOVIES;
+// filters movies list
+var SET_FILTER = 'SET_FILTER';
+exports.SET_FILTER = SET_FILTER;
+// filters users
+var SET_USER = 'SET_USER';
+exports.SET_USER = SET_USER;
+function setMovies(value) {
+  return {
+    type: SET_MOVIES,
+    value: value
+  };
+}
+function setFilter(value) {
+  return {
+    type: SET_FILTER,
+    value: value
+  };
+}
+function setUSER(value) {
+  return {
+    type: SET_USER,
+    value: value
+  };
+}
+
+},{}],"3X8QW":[function() {},{}],"5iJih":[function() {},{}],"3vUkb":[function(require,module,exports) {
 'use strict';
 
 var compose = require('redux').compose;
