@@ -3,6 +3,7 @@ import axios from "axios";
 import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import Button from 'react-bootstrap/Button';
+import { setMovies } from '../../actions/actions';
 
 export class MovieView extends React.Component {
 
@@ -17,7 +18,6 @@ export class MovieView extends React.Component {
       localStorage.getItem("user") +
       "/movies/" +
       movie._id;
-
     console.log(token);
 
     axios
@@ -65,7 +65,7 @@ export class MovieView extends React.Component {
 
         </div>
         <Link to={'/'}> <Button variant="dark">Back</Button> </Link>
-        <Button variant="info" onClick={() => this.addFavoriteMovie(movie)}>Favorite</Button>
+        <Button variant="info" onClick={() => this.addFavorite(movie)}>Favorite</Button>
       </div>
       
     );

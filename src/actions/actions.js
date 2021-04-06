@@ -11,6 +11,8 @@ export function setMovies(value) {
        value };
 }
 
+
+
 export function setFilter(value) {
   return { 
       type: SET_FILTER, 

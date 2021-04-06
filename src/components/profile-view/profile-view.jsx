@@ -1,9 +1,8 @@
-  
 import React from 'react';
 import propTypes from 'prop-types';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import MoviesList from '../movies-list/movies-list'
+import { connect } from 'react-redux';
 
 import {
     Form, 
@@ -14,7 +13,7 @@ import {
     Tabs
 } from 'react-bootstrap'
 
-export class ProfileView extends React.Component {
+class ProfileView extends React.Component {
   constructor() {
     super();
     (this.Username = null), (this.Password = null), (this.Email = null), (this.Birthday = null);
@@ -32,6 +31,7 @@ export class ProfileView extends React.Component {
     const accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
       this.getUser(accessToken);
+      this.get
     }
   }
 
@@ -59,26 +59,8 @@ export class ProfileView extends React.Component {
       });
   }
 
-  addFavoriteMovie(movie) {
-    let token = localStorage.getItem("token");
-    let url =
-      "https://kumi-movie-index.herokuapp.com/users/" +
-      localStorage.getItem("user") +
-      "/movies/" +
-      movie._id;
-
-    console.log(token);
-
-    axios
-      .post(url, "", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        console.log(response);
-        // window.open("/", "_self");
-        window.open("/users/" + localStorage.getItem("user"), "_self");
-        alert("Added to favorites!");
-      });
+  getFavoriteMovie(movie) {
+   //retrieve list of favourite movies
   }
 
 
@@ -192,9 +174,10 @@ export class ProfileView extends React.Component {
   
 
   render() {
-    const { movies, user, validated } = this.state;
+    const { user, validated } = this.state;
+    const {movies} = this.props;
     const username = localStorage.getItem('user');
-    const  FavoriteMovies = this.state.movies.map(movies => (<div key={movie._id}></div>))
+    const  FavoriteMovies = this.props.movies.map(movie => (<div key={movie._id}></div>))
 
     return (
       <Container className='profile-view'>
@@ -304,3 +287,12 @@ ProfileView.propTypes = {
     Birthday: propTypes.instanceOf(Date),
   })  
 };
+
+//retrieve movies and users from global state
+let mapStateToProps = state => {
+  return { movies: state.movies }, 
+  { user: state.user}
+}
+
+
+export default connect(mapStateToProps)(ProfileView);

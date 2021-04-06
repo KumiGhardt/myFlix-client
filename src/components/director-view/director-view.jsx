@@ -91,7 +91,6 @@ export class DirectorView extends React.Component {
 
 
 DirectorView.propTypes = {
-
   Movie: PropTypes.shape({
     Director: {
     Name: PropTypes.string.isRequired,

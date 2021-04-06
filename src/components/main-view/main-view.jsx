@@ -1,3 +1,5 @@
+//movies state that will hold the list of movies:
+
 import React from "react";
 import {
   BrowserRouter as Router,
@@ -29,13 +31,16 @@ import { MovieView } from "../movie-view/movie-view";
 import { RegistrationView } from "../registration-view/registration-view";
 import { DirectorView } from "../director-view/director-view";
 import { GenreView } from "../genre-view/genre-view";
-import { ProfileView } from "../profile-view/profile-view";
+import ProfileView from "../profile-view/profile-view";
+
+
 
 //components states
 export class MainView extends React.Component {
+  //create component with constructor- the place to initialize a state’s values.
   constructor(props) {
     super(props);
-    // props
+    // initialized with an object containing movies that holds an array of movies
     this.state = {
       movies: [],
       selectedMovie: null,
