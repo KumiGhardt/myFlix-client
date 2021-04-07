@@ -29,9 +29,14 @@ class ProfileView extends React.Component {
 
   componentDidMount() {
     const accessToken = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
+    //.split converts the string into an array
+    const favoritemovies = localStorage.getItem('favoriteMovies').split(',');
+    this.setState({
+      FavoriteMovies: favoritemovies
+    });
     if (accessToken !== null) {
       this.getUser(accessToken);
-      
     }
   }
 
@@ -59,9 +64,6 @@ class ProfileView extends React.Component {
       });
   }
 
-  getFavoriteMovie(movie) {
-   //retrieve list of favourite movies
-  }
 
 
   handleRemoveFavorite(e, movie) {
@@ -173,10 +175,11 @@ class ProfileView extends React.Component {
   
 
   render() {
-    const { user, validated } = this.state;
+    const { user, validated, FavoriteMovies } = this.state;
+    console.log({FavoriteMovies});
     const {movies} = this.props;
     const username = localStorage.getItem('user').Username;
-    const  FavoriteMovies = this.props.movies.map(movie => (<div key={movie._id}></div>))
+    //const  FavoriteMovies = this.props.movies.map(movie => (<div key={movie._id}></div>))
 
     return (
       <Container className='profile-view'>

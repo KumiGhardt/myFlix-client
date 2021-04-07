@@ -26736,12 +26736,13 @@ try {
       key: "onLoggedIn",
       value: /*When a user successfully logs in, this function updates the `user` property in state to that *particular user*/
       function onLoggedIn(authData) {
-        console.log(authData);
+        console.log('Auth Data User', authData.user);
         this.setState({
           user: authData.user
         });
         localStorage.setItem('token', authData.token);
         localStorage.setItem('user', authData.user);
+        localStorage.setItem('favoriteMovies', authData.user.FavoriteMovies);
         this.getMovies(authData.token);
       }
     }, {
@@ -36805,6 +36806,12 @@ try {
       key: "componentDidMount",
       value: function componentDidMount() {
         var accessToken = localStorage.getItem('token');
+        var user = localStorage.getItem('user');
+        // .split converts the string into an array
+        var favoritemovies = localStorage.getItem('favoriteMovies').split(',');
+        this.setState({
+          FavoriteMovies: favoritemovies
+        });
         if (accessToken !== null) {
           this.getUser(accessToken);
         }
@@ -36834,9 +36841,6 @@ try {
           console.log(error);
         });
       }
-    }, {
-      key: "getFavoriteMovie",
-      value: function getFavoriteMovie(movie) {}
     }, {
       key: "handleRemoveFavorite",
       value: function handleRemoveFavorite(e, movie) {
@@ -36946,16 +36950,13 @@ try {
       key: "render",
       value: function render() {
         var _this5 = this;
-        var _this$state = this.state, user = _this$state.user, validated = _this$state.validated;
+        var _this$state = this.state, user = _this$state.user, validated = _this$state.validated, FavoriteMovies = _this$state.FavoriteMovies;
+        console.log({
+          FavoriteMovies: FavoriteMovies
+        });
         var movies = this.props.movies;
         var username = localStorage.getItem('user').Username;
-        var FavoriteMovies = this.props.movies.map(function (movie) {
-          return (
-            /*#__PURE__*/_react["default"].createElement("div", {
-              key: movie._id
-            })
-          );
-        });
+        // const  FavoriteMovies = this.props.movies.map(movie => (<div key={movie._id}></div>))
         return (
           /*#__PURE__*/_react["default"].createElement(_reactBootstrap.Container, {
             className: "profile-view"

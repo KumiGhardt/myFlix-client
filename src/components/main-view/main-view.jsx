@@ -61,12 +61,13 @@ export class MainView extends React.Component {
 
   /* When a user successfully logs in, this function updates the `user` property in state to that *particular user*/
   onLoggedIn(authData) {
-    console.log(authData);
-    this.setState({
+    console.log('Auth Data User', authData.user); 
+       this.setState({
       user: authData.user
     });
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user);
+    localStorage.setItem('favoriteMovies', authData.user.FavoriteMovies);
     this.getMovies(authData.token);
   }
 
