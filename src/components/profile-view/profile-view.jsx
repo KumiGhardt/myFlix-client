@@ -31,13 +31,13 @@ class ProfileView extends React.Component {
     const accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
       this.getUser(accessToken);
-      this.get
+      
     }
   }
 
 
   getUser(token) {
-    const Username = localStorage.getItem('user');
+    const Username = localStorage.getItem('user').Username;
     axios
       .get('https://kumi-movie-index.herokuapp.com/users', {
         headers: { Authorization: `Bearer ${token}` },
@@ -64,7 +64,6 @@ class ProfileView extends React.Component {
   }
 
 
-  // favourites should be in a seperate component
   handleRemoveFavorite(e, movie) {
     e.preventDefault();
     const username = localStorage.getItem('user');
@@ -123,7 +122,7 @@ class ProfileView extends React.Component {
           Birthday: response.data.Birthday,
         });
         alert('Changes have been saved!');
-        localStorage.setItem('user', this.state.Username);
+        localStorage.setItem('user', this.state);
         // this.props.history.push(`/users/${username}`);
         window.location.pathname = `/users/${username}`
         // console.log(response.data);
@@ -176,7 +175,7 @@ class ProfileView extends React.Component {
   render() {
     const { user, validated } = this.state;
     const {movies} = this.props;
-    const username = localStorage.getItem('user');
+    const username = localStorage.getItem('user').Username;
     const  FavoriteMovies = this.props.movies.map(movie => (<div key={movie._id}></div>))
 
     return (
@@ -290,8 +289,7 @@ ProfileView.propTypes = {
 
 //retrieve movies and users from global state
 let mapStateToProps = state => {
-  return { movies: state.movies }, 
-  { user: state.user}
+  return { movies: state.movies ,  user: state.user}
 }
 
 

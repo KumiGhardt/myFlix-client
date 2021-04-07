@@ -26738,10 +26738,10 @@ try {
       function onLoggedIn(authData) {
         console.log(authData);
         this.setState({
-          user: authData.user.Username
+          user: authData.user
         });
         localStorage.setItem('token', authData.token);
-        localStorage.setItem('user', authData.user.Username);
+        localStorage.setItem('user', authData.user);
         this.getMovies(authData.token);
       }
     }, {
@@ -36807,14 +36807,13 @@ try {
         var accessToken = localStorage.getItem('token');
         if (accessToken !== null) {
           this.getUser(accessToken);
-          this.get;
         }
       }
     }, {
       key: "getUser",
       value: function getUser(token) {
         var _this2 = this;
-        var Username = localStorage.getItem('user');
+        var Username = localStorage.getItem('user').Username;
         _axios["default"].get('https://kumi-movie-index.herokuapp.com/users', {
           headers: {
             Authorization: ("Bearer ").concat(token)
@@ -36840,8 +36839,7 @@ try {
       value: function getFavoriteMovie(movie) {}
     }, {
       key: "handleRemoveFavorite",
-      value: // favourites should be in a seperate component
-      function handleRemoveFavorite(e, movie) {
+      value: function handleRemoveFavorite(e, movie) {
         var _this3 = this;
         e.preventDefault();
         var username = localStorage.getItem('user');
@@ -36897,7 +36895,7 @@ try {
             Birthday: response.data.Birthday
           });
           alert('Changes have been saved!');
-          localStorage.setItem('user', _this4.state.Username);
+          localStorage.setItem('user', _this4.state);
           // this.props.history.push(`/users/${username}`);
           window.location.pathname = ("/users/").concat(username);
         })["catch"](function (error) {
@@ -36950,7 +36948,7 @@ try {
         var _this5 = this;
         var _this$state = this.state, user = _this$state.user, validated = _this$state.validated;
         var movies = this.props.movies;
-        var username = localStorage.getItem('user');
+        var username = localStorage.getItem('user').Username;
         var FavoriteMovies = this.props.movies.map(function (movie) {
           return (
             /*#__PURE__*/_react["default"].createElement("div", {
@@ -37127,11 +37125,10 @@ try {
   };
   // retrieve movies and users from global state
   var mapStateToProps = function mapStateToProps(state) {
-    return ({
-      movies: state.movies
-    }, {
+    return {
+      movies: state.movies,
       user: state.user
-    });
+    };
   };
   var _default = (0, _reactRedux.connect)(mapStateToProps)(ProfileView);
   exports["default"] = _default;
