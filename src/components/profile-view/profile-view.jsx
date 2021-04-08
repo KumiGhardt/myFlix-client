@@ -16,7 +16,6 @@ import {
 class ProfileView extends React.Component {
   constructor() {
     super();
-    (this.Username = null), (this.Password = null), (this.Email = null), (this.Birthday = null);
     this.state = {
       Username: null,
       Password: null,
@@ -29,7 +28,8 @@ class ProfileView extends React.Component {
 
   componentDidMount() {
     const accessToken = localStorage.getItem('token');
-    const user = localStorage.getItem('user');
+    const user = JSON.parse(localStorage.getItem('user'));
+    console.log({ user });
     //.split converts the string into an array
     const favoritemovies = localStorage.getItem('favoriteMovies').split(',');
     this.setState({
@@ -42,7 +42,7 @@ class ProfileView extends React.Component {
 
 
   getUser(token) {
-    const Username = localStorage.getItem('user').Username;
+    const Username = JSON.parse(localStorage.getItem('user')).Username;
     axios
       .get('https://kumi-movie-index.herokuapp.com/users', {
         headers: { Authorization: `Bearer ${token}` },
@@ -67,12 +67,13 @@ class ProfileView extends React.Component {
 
 
   handleRemoveFavorite(e, movie) {
+    console.log(movie);
     e.preventDefault();
-    const username = localStorage.getItem('user');
+    const username = JSON.parse(localStorage.getItem('user')).Username;
     const token = localStorage.getItem('token'); 
     
     axios
-      .delete(`https://kumi-movie-index.herokuapp.com/users/${username}/FavoriteMovies/${movie}`, {
+      .delete(`https://kumi-movie-index.herokuapp.com/users/${username}/movies/${movie}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then(() => {
@@ -103,7 +104,7 @@ class ProfileView extends React.Component {
     e.preventDefault();
 
     const token = localStorage.getItem('token');
-    const username = localStorage.getItem('user');
+    const username = JSON.parse(localStorage.getItem('user')).Username;
 
     axios({
       method: 'put',
@@ -117,6 +118,7 @@ class ProfileView extends React.Component {
       },
     })
       .then((response) => {
+        console.log ({response});
         this.setState({
           Username: response.data.Username,
           Password: response.data.Password,
@@ -124,7 +126,7 @@ class ProfileView extends React.Component {
           Birthday: response.data.Birthday,
         });
         alert('Changes have been saved!');
-        localStorage.setItem('user', this.state);
+        localStorage.setItem('user', JSON.stringify(response.data));
         // this.props.history.push(`/users/${username}`);
         window.location.pathname = `/users/${username}`
         // console.log(response.data);
@@ -139,7 +141,7 @@ class ProfileView extends React.Component {
   //deregister
   handleDeregister() {
     const token = localStorage.getItem('token');
-    const user = localStorage.getItem("user");
+    const user = JSON.parse(localStorage.getItem("user")).Username;
     axios
       .delete(`https://kumi-movie-index.herokuapp.com/users/${user}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -149,7 +151,7 @@ class ProfileView extends React.Component {
         localStorage.removeItem('token');
         alert('Your account has been deleted');
         // this.props.history.push(`/`);
-        window.location.pathname = `/`
+        window.location.pathname = `/login`
       })
       .catch((e) => {
         console.log(e);
@@ -178,7 +180,7 @@ class ProfileView extends React.Component {
     const { user, validated, FavoriteMovies } = this.state;
     console.log({FavoriteMovies});
     const {movies} = this.props;
-    const username = localStorage.getItem('user').Username;
+    const username = JSON.parse(localStorage.getItem('user')).Username;
     //const  FavoriteMovies = this.props.movies.map(movie => (<div key={movie._id}></div>))
 
     return (
@@ -276,23 +278,12 @@ class ProfileView extends React.Component {
 }
 
 ProfileView.propTypes = {
-  movies: propTypes.array.isRequired,
-  user: propTypes.shape({
-    FavoriteMovies: propTypes.arrayOf(
-      propTypes.shape({
-        _id: propTypes.string.isRequired,
-        Title: propTypes.string.isRequired,
-      })
-    ),
-    Username: propTypes.string.isRequired,
-    Email: propTypes.string.isRequired,
-    Birthday: propTypes.instanceOf(Date),
-  })  
+  movies: propTypes.array.isRequired, 
 };
 
 //retrieve movies and users from global state
 let mapStateToProps = state => {
-  return { movies: state.movies ,  user: state.user}
+  return { movies: state.movies }
 }
 
 

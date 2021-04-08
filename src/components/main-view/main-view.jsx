@@ -41,10 +41,11 @@ export class MainView extends React.Component {
   constructor(props) {
     super(props);
     // initialized with an object containing movies that holds an array of movies
+    const localUser = JSON.parse(localStorage.getItem('user'))
     this.state = {
       movies: [],
       selectedMovie: null,
-      user: null,
+      user: localUser,
       register: null,
     };
   }
@@ -52,9 +53,9 @@ export class MainView extends React.Component {
   componentDidMount() {
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
-      this.setState({
-        user: localStorage.getItem('user')
-      });
+      // this.setState({
+      //   user: JSON.parse(localStorage.getItem('user'))
+      // });
       this.getMovies(accessToken);
     }
   }
@@ -66,19 +67,21 @@ export class MainView extends React.Component {
       user: authData.user
     });
     localStorage.setItem('token', authData.token);
-    localStorage.setItem('user', authData.user);
+    localStorage.setItem('user', JSON.stringify(authData.user));
     localStorage.setItem('favoriteMovies', authData.user.FavoriteMovies);
+    window.location.pathname = '/';
     this.getMovies(authData.token);
   }
 
   logOut() {
+
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.setState({
       user: null
     });
     alert('You have logged out');
-    window.open('/', '_self');
+    window.open('/login', '_self');
   }
 
   //make a GET request to heroku.
@@ -120,20 +123,28 @@ export class MainView extends React.Component {
     const { selectedMovie, register } = this.state;
 
     /* If there is no user, the LoginView is rendered. If there is a user logged in, the user details are *passed as a prop to the LoginView*/
-    if (!user) return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+    //if (!user) return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+    if(window.location.pathname === '/login') {
+      if(!user) {
+      return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
+      }
+    }
 
     // Before the movies have been loaded
     if (!movies) return <div className="main-view" />;
-
+    if(window.location.pathname === '/register'){
+      return <RegistrationView />
+    }
     return (
       <Container>
         <Router>
+        
           <Navbar>
             <Navbar.Brand href="/">Home</Navbar.Brand>
             <Navbar.Toggle />
             <Navbar.Collapse className="justify-content-end">
               <Nav className="justify-content-end">
-                <Nav.Link href={`/users/${user}`}>My Account</Nav.Link>
+                <Nav.Link href={`/users/${user.Username}`}>My Account</Nav.Link>
               </Nav>
               <Button onClick={() => this.logOut()} variant="secondary">Log Out</Button>
             </Navbar.Collapse>
@@ -142,13 +153,13 @@ export class MainView extends React.Component {
           {/* movies */}
           
           <Row className="main-view">
+          <Route exact path="/register" render={() => <RegistrationView />} />
+
             <Route exact path="/" render={() => {
               if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
               return <MoviesList movies={movies} />;
             }} />
-            <Route path="/register" render={() => <RegistrationView />} />
-            {/* if (!register) return <RegistrationView onRegister={(register) => this.onRegister(register)} /> */}
-
+            
             <Route path="/movies/:movieId" render={({ match }) => <MovieView movie={movies.find(m => m._id === match.params.movieId)} />} />
 
             <Route path="/genres/:name" render={({ match }) => {

@@ -11,11 +11,12 @@ export class MovieView extends React.Component {
     super();
     this.state = {};
   }
+
   addFavoriteMovie(movie) {
     let token = localStorage.getItem("token");
     let url =
       "https://kumi-movie-index.herokuapp.com/users/" +
-      localStorage.getItem("user") +
+      JSON.parse(localStorage.getItem("user")).Username +
       "/movies/" +
       movie._id;
     console.log(token);
@@ -27,7 +28,7 @@ export class MovieView extends React.Component {
       .then((response) => {
         console.log(response);
         // window.open("/", "_self");
-        window.open("/users/" + localStorage.getItem("user"), "_self");
+        window.open("/users/" + JSON.parse(localStorage.getItem("user")).Username, "_self");
         alert("Added to favorites!");
       });
   }
@@ -65,7 +66,7 @@ export class MovieView extends React.Component {
 
         </div>
         <Link to={'/'}> <Button variant="dark">Back</Button> </Link>
-        <Button variant="info" onClick={() => this.addFavorite(movie)}>Favorite</Button>
+        <Button variant="info" onClick={() => this.addFavoriteMovie(movie)}>Favorite</Button>
       </div>
       
     );

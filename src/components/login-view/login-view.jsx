@@ -43,6 +43,9 @@ export function LoginView(props) {
             <Button variant="dark" type="submit" onClick={handleSubmit}>
                 Submit
           </Button>
+          <Button variant="light" onClick={ () => window.location.pathname = '/register'}>
+                Register
+          </Button>
         </Form>
     );
 }
