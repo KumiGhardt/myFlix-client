@@ -1,6 +1,5 @@
 {
     "dependencies": {
-        "@babel/preset-react": "^7.13.13",
         "@parcel/transformer-sass": "^2.0.0-nightly.636",
         "axios": "^0.21.1",
         "bootstrap": "^4.6.0",
