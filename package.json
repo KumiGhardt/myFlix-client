@@ -21,8 +21,7 @@
         "sass": "^1.32.8"
     },
     "scripts": {
-        "start": "parcel ./src/index.html --open",
-        "build": "parcel build ./src/index.html"
+        "start": "parcel ./src/index.html --open"
     },
     "devDependencies": {
         "@babel/preset-react": "^7.13.13",
