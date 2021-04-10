@@ -151,7 +151,7 @@ window.$RefreshSig$ = function() {
     return type;
   };
 };
-},{"react-refresh/runtime":"553PH"}],"553PH":[function(require,module,exports) {
+},{"react-refresh/runtime":"592mh"}],"592mh":[function(require,module,exports) {
 "use strict";
 if ("development" === 'production') {
   module.exports = require('./cjs/react-refresh-runtime.production.min.js');
@@ -159,7 +159,7 @@ if ("development" === 'production') {
   module.exports = require('./cjs/react-refresh-runtime.development.js');
 }
 
-},{"./cjs/react-refresh-runtime.development.js":"6E27c"}],"6E27c":[function(require,module,exports) {
+},{"./cjs/react-refresh-runtime.development.js":"2rNh6"}],"2rNh6":[function(require,module,exports) {
 /** @license React v0.9.0
 * react-refresh-runtime.development.js
 *
@@ -740,9 +740,9 @@ if ("development" !== "production") {
   })();
 }
 
-},{}],"68WUB":[function(require,module,exports) {
+},{}],"771Ba":[function(require,module,exports) {
 var HMR_HOST = null;
-var HMR_PORT = 1234;
+var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "d751713988987e9331980363e24189ce";
 module.bundle.HMR_BUNDLE_ID = "f9eab60bc3a7a7c3f683683702675e63";
@@ -1043,7 +1043,7 @@ id) /*: string*/
 
 },{}],"1DVjT":[function(require,module,exports) {
 "use strict";
-var helpers = require("../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var helpers = require("../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
 helpers.prelude(module);
@@ -1188,7 +1188,7 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","react-dom":"2sg1U","redux":"7panR","react-redux":"7GDa4","redux-devtools-extension":"3vUkb","./components/main-view/main-view":"67PhB","./reducers/reducers":"2736c","./index.scss":"5iJih","../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"hBb5s"}],"3b2NM":[function(require,module,exports) {
+},{"react":"3b2NM","react-dom":"2sg1U","redux":"7panR","react-redux":"7GDa4","redux-devtools-extension":"3vUkb","./components/main-view/main-view":"67PhB","./reducers/reducers":"2736c","./index.scss":"5iJih","../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"3b2NM":[function(require,module,exports) {
 "use strict";
 if ("development" === 'production') {
   module.exports = require('./cjs/react.production.min.js');
@@ -1197,7 +1197,7 @@ if ("development" === 'production') {
 }
 
 },{"./cjs/react.development.js":"ixJ97"}],"ixJ97":[function(require,module,exports) {
-/** @license React v17.0.1
+/** @license React v17.0.2
 * react.development.js
 *
 * Copyright (c) Facebook, Inc. and its affiliates.
@@ -1211,7 +1211,7 @@ if ("development" !== "production") {
     "use strict";
     var _assign = require('object-assign');
     // TODO: this is special because it gets imported during build.
-    var ReactVersion = '17.0.1';
+    var ReactVersion = '17.0.2';
     // ATTENTION
     // When adding new symbols to this file,
     // Please consider also adding to 'react-devtools-shared/src/backend/ReactSymbols'
@@ -3327,7 +3327,7 @@ if ("development" === 'production') {
 }
 
 },{"./cjs/react-dom.development.js":"6fSaM"}],"6fSaM":[function(require,module,exports) {
-/** @license React v17.0.1
+/** @license React v17.0.2
 * react-dom.development.js
 *
 * Copyright (c) Facebook, Inc. and its affiliates.
@@ -12959,7 +12959,7 @@ if ("development" !== "production") {
       }
     }
     // TODO: this is special because it gets imported during build.
-    var ReactVersion = '17.0.1';
+    var ReactVersion = '17.0.2';
     var NoMode = 0;
     var StrictMode = 1;
     // TODO: Remove BlockingMode and ConcurrentMode by reading from the root
@@ -25527,7 +25527,7 @@ if ("development" === 'production') {
 }
 
 },{"./cjs/scheduler.development.js":"59Ipp"}],"59Ipp":[function(require,module,exports) {
-/** @license React v0.20.1
+/** @license React v0.20.2
 * scheduler.development.js
 *
 * Copyright (c) Facebook, Inc. and its affiliates.
@@ -25540,7 +25540,7 @@ if ("development" !== "production") {
   (function () {
     "use strict";
     var enableSchedulerDebugging = false;
-    var enableProfiling = true;
+    var enableProfiling = false;
     var requestHostCallback;
     var requestHostTimeout;
     var cancelHostTimeout;
@@ -25770,157 +25770,12 @@ if ("development" !== "production") {
       return diff !== 0 ? diff : a.id - b.id;
     }
     // TODO: Use symbols?
-    var NoPriority = 0;
     var ImmediatePriority = 1;
     var UserBlockingPriority = 2;
     var NormalPriority = 3;
     var LowPriority = 4;
     var IdlePriority = 5;
-    var runIdCounter = 0;
-    var mainThreadIdCounter = 0;
-    var profilingStateSize = 4;
-    var sharedProfilingBuffer = // $FlowFixMe Flow doesn't know about SharedArrayBuffer
-    typeof SharedArrayBuffer === 'function' ? new SharedArrayBuffer(profilingStateSize * Int32Array.BYTES_PER_ELEMENT) : // $FlowFixMe Flow doesn't know about ArrayBuffer
-    typeof ArrayBuffer === 'function' ? new ArrayBuffer(profilingStateSize * Int32Array.BYTES_PER_ELEMENT) : null;
-    var profilingState = sharedProfilingBuffer !== null ? new Int32Array(sharedProfilingBuffer) : [];
-    // We can't read this but it helps save bytes for null checks
-    var PRIORITY = 0;
-    var CURRENT_TASK_ID = 1;
-    var CURRENT_RUN_ID = 2;
-    var QUEUE_SIZE = 3;
-    {
-      profilingState[PRIORITY] = NoPriority;
-      // This is maintained with a counter, because the size of the priority queue
-      // array might include canceled tasks.
-      profilingState[QUEUE_SIZE] = 0;
-      profilingState[CURRENT_TASK_ID] = 0;
-          // Bytes per element is 4
-}
-    // Bytes per element is 4
-    var INITIAL_EVENT_LOG_SIZE = 131072;
-    var MAX_EVENT_LOG_SIZE = 524288;
-    // Equivalent to 2 megabytes
-    var eventLogSize = 0;
-    var eventLogBuffer = null;
-    var eventLog = null;
-    var eventLogIndex = 0;
-    var TaskStartEvent = 1;
-    var TaskCompleteEvent = 2;
-    var TaskErrorEvent = 3;
-    var TaskCancelEvent = 4;
-    var TaskRunEvent = 5;
-    var TaskYieldEvent = 6;
-    var SchedulerSuspendEvent = 7;
-    var SchedulerResumeEvent = 8;
-    function logEvent(entries) {
-      if (eventLog !== null) {
-        var offset = eventLogIndex;
-        eventLogIndex += entries.length;
-        if (eventLogIndex + 1 > eventLogSize) {
-          eventLogSize *= 2;
-          if (eventLogSize > MAX_EVENT_LOG_SIZE) {
-            // Using console['error'] to evade Babel and ESLint
-            console['error']("Scheduler Profiling: Event log exceeded maximum size. Don't " + 'forget to call `stopLoggingProfilingEvents()`.');
-            stopLoggingProfilingEvents();
-            return;
-          }
-          var newEventLog = new Int32Array(eventLogSize * 4);
-          newEventLog.set(eventLog);
-          eventLogBuffer = newEventLog.buffer;
-          eventLog = newEventLog;
-        }
-        eventLog.set(entries, offset);
-      }
-    }
-    function startLoggingProfilingEvents() {
-      eventLogSize = INITIAL_EVENT_LOG_SIZE;
-      eventLogBuffer = new ArrayBuffer(eventLogSize * 4);
-      eventLog = new Int32Array(eventLogBuffer);
-      eventLogIndex = 0;
-    }
-    function stopLoggingProfilingEvents() {
-      var buffer = eventLogBuffer;
-      eventLogSize = 0;
-      eventLogBuffer = null;
-      eventLog = null;
-      eventLogIndex = 0;
-      return buffer;
-    }
-    function markTaskStart(task, ms) {
-      {
-        profilingState[QUEUE_SIZE]++;
-        if (eventLog !== null) {
-          // performance.now returns a float, representing milliseconds. When the
-          // event is logged, it's coerced to an int. Convert to microseconds to
-          // maintain extra degrees of precision.
-          logEvent([TaskStartEvent, ms * 1000, task.id, task.priorityLevel]);
-        }
-      }
-    }
-    function markTaskCompleted(task, ms) {
-      {
-        profilingState[PRIORITY] = NoPriority;
-        profilingState[CURRENT_TASK_ID] = 0;
-        profilingState[QUEUE_SIZE]--;
-        if (eventLog !== null) {
-          logEvent([TaskCompleteEvent, ms * 1000, task.id]);
-        }
-      }
-    }
-    function markTaskCanceled(task, ms) {
-      {
-        profilingState[QUEUE_SIZE]--;
-        if (eventLog !== null) {
-          logEvent([TaskCancelEvent, ms * 1000, task.id]);
-        }
-      }
-    }
-    function markTaskErrored(task, ms) {
-      {
-        profilingState[PRIORITY] = NoPriority;
-        profilingState[CURRENT_TASK_ID] = 0;
-        profilingState[QUEUE_SIZE]--;
-        if (eventLog !== null) {
-          logEvent([TaskErrorEvent, ms * 1000, task.id]);
-        }
-      }
-    }
-    function markTaskRun(task, ms) {
-      {
-        runIdCounter++;
-        profilingState[PRIORITY] = task.priorityLevel;
-        profilingState[CURRENT_TASK_ID] = task.id;
-        profilingState[CURRENT_RUN_ID] = runIdCounter;
-        if (eventLog !== null) {
-          logEvent([TaskRunEvent, ms * 1000, task.id, runIdCounter]);
-        }
-      }
-    }
-    function markTaskYield(task, ms) {
-      {
-        profilingState[PRIORITY] = NoPriority;
-        profilingState[CURRENT_TASK_ID] = 0;
-        profilingState[CURRENT_RUN_ID] = 0;
-        if (eventLog !== null) {
-          logEvent([TaskYieldEvent, ms * 1000, task.id, runIdCounter]);
-        }
-      }
-    }
-    function markSchedulerSuspended(ms) {
-      {
-        mainThreadIdCounter++;
-        if (eventLog !== null) {
-          logEvent([SchedulerSuspendEvent, ms * 1000, mainThreadIdCounter]);
-        }
-      }
-    }
-    function markSchedulerUnsuspended(ms) {
-      {
-        if (eventLog !== null) {
-          logEvent([SchedulerResumeEvent, ms * 1000, mainThreadIdCounter]);
-        }
-      }
-    }
+    function markTaskErrored(task, ms) {}
     /*eslint-disable no-var*/
     // Math.pow(2, 30) - 1
     // 0b111111111111111111111111111111
@@ -25957,10 +25812,6 @@ if ("development" !== "production") {
           pop(timerQueue);
           timer.sortIndex = timer.expirationTime;
           push(taskQueue, timer);
-          {
-            markTaskStart(timer, currentTime);
-            timer.isQueued = true;
-          }
         } else {
           // Remaining timers are pending.
           return;
@@ -25984,11 +25835,6 @@ if ("development" !== "production") {
       }
     }
     function flushWork(hasTimeRemaining, initialTime) {
-      {
-        markSchedulerUnsuspended(initialTime);
-              // We'll need a host callback the next time work is scheduled.
-}
-      // We'll need a host callback the next time work is scheduled.
       isHostCallbackScheduled = false;
       if (isHostTimeoutScheduled) {
         // We scheduled a timeout but it's no longer needed. Cancel it.
@@ -26017,10 +25863,6 @@ if ("development" !== "production") {
         currentTask = null;
         currentPriorityLevel = previousPriorityLevel;
         isPerformingWork = false;
-        {
-          var _currentTime = exports.unstable_now();
-          markSchedulerSuspended(_currentTime);
-        }
       }
     }
     function workLoop(hasTimeRemaining, initialTime) {
@@ -26037,17 +25879,11 @@ if ("development" !== "production") {
           currentTask.callback = null;
           currentPriorityLevel = currentTask.priorityLevel;
           var didUserCallbackTimeout = currentTask.expirationTime <= currentTime;
-          markTaskRun(currentTask, currentTime);
           var continuationCallback = callback(didUserCallbackTimeout);
           currentTime = exports.unstable_now();
           if (typeof continuationCallback === 'function') {
             currentTask.callback = continuationCallback;
-            markTaskYield(currentTask, currentTime);
           } else {
-            {
-              markTaskCompleted(currentTask, currentTime);
-              currentTask.isQueued = false;
-            }
             if (currentTask === peek(taskQueue)) {
               pop(taskQueue);
             }
@@ -26164,9 +26000,6 @@ if ("development" !== "production") {
         expirationTime: expirationTime,
         sortIndex: -1
       };
-      {
-        newTask.isQueued = false;
-      }
       if (startTime > currentTime) {
         // This is a delayed task.
         newTask.sortIndex = startTime;
@@ -26185,13 +26018,6 @@ if ("development" !== "production") {
       } else {
         newTask.sortIndex = expirationTime;
         push(taskQueue, newTask);
-        {
-          markTaskStart(newTask, currentTime);
-          newTask.isQueued = true;
-                  // Schedule a host callback, if needed. If we're already performing work,
-          // wait until the next time we yield.
-}
-        // Schedule a host callback, if needed. If we're already performing work,
         // wait until the next time we yield.
         if (!isHostCallbackScheduled && !isPerformingWork) {
           isHostCallbackScheduled = true;
@@ -26211,17 +26037,6 @@ if ("development" !== "production") {
       return peek(taskQueue);
     }
     function unstable_cancelCallback(task) {
-      {
-        if (task.isQueued) {
-          var currentTime = exports.unstable_now();
-          markTaskCanceled(task, currentTime);
-          task.isQueued = false;
-        }
-              // Null out the callback to indicate the task has been canceled. (Can't
-        // remove from the queue because you can't remove arbitrary nodes from an
-        // array based heap, only the first one.)
-}
-      // Null out the callback to indicate the task has been canceled. (Can't
       // remove from the queue because you can't remove arbitrary nodes from an
       // array based heap, only the first one.)
       task.callback = null;
@@ -26230,11 +26045,7 @@ if ("development" !== "production") {
       return currentPriorityLevel;
     }
     var unstable_requestPaint = requestPaint;
-    var unstable_Profiling = {
-      startLoggingProfilingEvents: startLoggingProfilingEvents,
-      stopLoggingProfilingEvents: stopLoggingProfilingEvents,
-      sharedProfilingBuffer: sharedProfilingBuffer
-    };
+    var unstable_Profiling = null;
     exports.unstable_IdlePriority = IdlePriority;
     exports.unstable_ImmediatePriority = ImmediatePriority;
     exports.unstable_LowPriority = LowPriority;
@@ -26263,7 +26074,7 @@ if ("development" === 'production') {
 }
 
 },{"./cjs/scheduler-tracing.development.js":"2qFgQ"}],"2qFgQ":[function(require,module,exports) {
-/** @license React v0.20.1
+/** @license React v0.20.2
 * scheduler-tracing.development.js
 *
 * Copyright (c) Facebook, Inc. and its affiliates.
@@ -29634,7 +29445,7 @@ exports.devToolsEnhancer =
 
 },{"redux":"7panR"}],"67PhB":[function(require,module,exports) {
 "use strict";
-var helpers = require("../../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
 helpers.prelude(module);
@@ -30015,7 +29826,7 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","react-router-dom":"1PMSK","axios":"7rA65","react-redux":"7GDa4","../../actions/actions":"5S6cN","prop-types":"4dfy5","react-bootstrap/Container":"3Mt3t","react-bootstrap/Row":"3fzwD","react-bootstrap/Nav":"3T3v1","react-bootstrap/Navbar":"3qLFd","react-bootstrap/NavDropdown":"1qmIy","react-bootstrap/Form":"6A5ko","react-bootstrap/FormControl":"573gP","react-bootstrap/Button":"1ru0l","../main-view/main-view.scss":"3X8QW","../movies-list/movies-list":"3Biek","../login-view/login-view":"6M7fu","../movie-card/movie-card":"7v6h3","../movie-view/movie-view":"3xBbr","../registration-view/registration-view":"7gvH2","../director-view/director-view":"7HF27","../genre-view/genre-view":"6FLqj","../profile-view/profile-view":"3CncI","../../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"hBb5s"}],"1PMSK":[function(require,module,exports) {
+},{"react":"3b2NM","react-router-dom":"1PMSK","axios":"7rA65","react-redux":"7GDa4","../../actions/actions":"5S6cN","prop-types":"4dfy5","react-bootstrap/Container":"3Mt3t","react-bootstrap/Row":"3fzwD","react-bootstrap/Nav":"3T3v1","react-bootstrap/Navbar":"3qLFd","react-bootstrap/NavDropdown":"1qmIy","react-bootstrap/Form":"6A5ko","react-bootstrap/FormControl":"573gP","react-bootstrap/Button":"1ru0l","../main-view/main-view.scss":"3X8QW","../movies-list/movies-list":"3Biek","../login-view/login-view":"6M7fu","../movie-card/movie-card":"7v6h3","../movie-view/movie-view":"3xBbr","../registration-view/registration-view":"7gvH2","../director-view/director-view":"7HF27","../genre-view/genre-view":"6FLqj","../profile-view/profile-view":"3CncI","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"1PMSK":[function(require,module,exports) {
 "use strict";
 if ("development" === "production") {
   module.exports = require("./cjs/react-router-dom.min.js");
@@ -33031,7 +32842,7 @@ function pathToRegexp (path, keys, options) {
   return stringToRegexp(/** @type {string} */ (path), /** @type {!Array} */ (keys), options)
 }
 
-},{"isarray":"5JxtJ"}],"5JxtJ":[function(require,module,exports) {
+},{"isarray":"4oDl7"}],"4oDl7":[function(require,module,exports) {
 module.exports = Array.isArray || function (arr) {
   return Object.prototype.toString.call(arr) == '[object Array]';
 };
@@ -34833,7 +34644,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 });
 module.exports = defaults;
 
-},{"process":"7pi2M","./utils":"7J9rV","./helpers/normalizeHeaderName":"5yMqL","./adapters/xhr":"6pJqL","./adapters/http":"6pJqL"}],"7pi2M":[function(require,module,exports) {
+},{"process":"7AgFc","./utils":"7J9rV","./helpers/normalizeHeaderName":"5yMqL","./adapters/xhr":"6pJqL","./adapters/http":"6pJqL"}],"7AgFc":[function(require,module,exports) {
 // shim for using process in browser
 var process = module.exports = {};
 // cached from whatever global is present so that test runners that stub it
@@ -35822,7 +35633,7 @@ module.exports = exports["default"];
 },{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","@babel/runtime/helpers/objectWithoutPropertiesLoose":"3Yx9V","classnames":"5aJRc","react":"3b2NM","./ThemeProvider":"4rz1S"}],"5aJRc":[function(require,module,exports) {
 var define;
 /*!
-Copyright (c) 2017 Jed Watson.
+Copyright (c) 2018 Jed Watson.
 Licensed under the MIT License (MIT), see
 http://jedwatson.github.io/classnames
 */
@@ -35838,16 +35649,22 @@ http://jedwatson.github.io/classnames
       var argType = typeof arg;
       if (argType === 'string' || argType === 'number') {
         classes.push(arg);
-      } else if (Array.isArray(arg) && arg.length) {
-        var inner = classNames.apply(null, arg);
-        if (inner) {
-          classes.push(inner);
+      } else if (Array.isArray(arg)) {
+        if (arg.length) {
+          var inner = classNames.apply(null, arg);
+          if (inner) {
+            classes.push(inner);
+          }
         }
       } else if (argType === 'object') {
-        for (var key in arg) {
-          if (hasOwn.call(arg, key) && arg[key]) {
-            classes.push(key);
+        if (arg.toString === Object.prototype.toString) {
+          for (var key in arg) {
+            if (hasOwn.call(arg, key) && arg[key]) {
+              classes.push(key);
+            }
           }
+        } else {
+          classes.push(arg.toString());
         }
       }
     }
@@ -42892,7 +42709,7 @@ exports.default = _default;
 module.exports = exports["default"];
 },{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","react":"3b2NM","./FormCheck":"6WcKM"}],"3X8QW":[function() {},{}],"3Biek":[function(require,module,exports) {
 "use strict";
-var helpers = require("../../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
 helpers.prelude(module);
@@ -42956,9 +42773,9 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","react-redux":"7GDa4","react-bootstrap/Row":"3fzwD","../visibility-filter-input/visibility-filter-input":"3SRLP","../movie-card/movie-card":"7v6h3","../../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"hBb5s"}],"3SRLP":[function(require,module,exports) {
+},{"react":"3b2NM","react-redux":"7GDa4","react-bootstrap/Row":"3fzwD","../visibility-filter-input/visibility-filter-input":"3SRLP","../movie-card/movie-card":"7v6h3","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"3SRLP":[function(require,module,exports) {
 "use strict";
-var helpers = require("../../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
 helpers.prelude(module);
@@ -43001,7 +42818,7 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","prop-types":"4dfy5","react-redux":"7GDa4","react-bootstrap/Form":"6A5ko","../../actions/actions":"5S6cN","../../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"hBb5s"}],"hBb5s":[function(require,module,exports) {
+},{"react":"3b2NM","prop-types":"4dfy5","react-redux":"7GDa4","react-bootstrap/Form":"6A5ko","../../actions/actions":"5S6cN","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"4Jj4f":[function(require,module,exports) {
 "use strict";
 var Refresh = require('react-refresh/runtime');
 function debounce(func, delay) {
@@ -43158,9 +42975,9 @@ function registerExportsForReactRefresh(module) {
   }
 }
 
-},{"react-refresh/runtime":"553PH"}],"7v6h3":[function(require,module,exports) {
+},{"react-refresh/runtime":"592mh"}],"7v6h3":[function(require,module,exports) {
 "use strict";
-var helpers = require("../../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
 helpers.prelude(module);
@@ -43318,7 +43135,7 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","prop-types":"4dfy5","react-bootstrap/Button":"1ru0l","react-bootstrap/Card":"1CZWQ","react-router-dom":"1PMSK","../../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"hBb5s"}],"1CZWQ":[function(require,module,exports) {
+},{"react":"3b2NM","prop-types":"4dfy5","react-bootstrap/Button":"1ru0l","react-bootstrap/Card":"1CZWQ","react-router-dom":"1PMSK","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"1CZWQ":[function(require,module,exports) {
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -43480,7 +43297,7 @@ exports.default = _default;
 module.exports = exports["default"];
 },{"@babel/runtime/helpers/interopRequireDefault":"4ttVj","@babel/runtime/helpers/extends":"3krLJ","@babel/runtime/helpers/objectWithoutPropertiesLoose":"3Yx9V","classnames":"5aJRc","react":"3b2NM","./ThemeProvider":"4rz1S"}],"6M7fu":[function(require,module,exports) {
 "use strict";
-var helpers = require("../../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
 helpers.prelude(module);
@@ -43657,9 +43474,9 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","prop-types":"4dfy5","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","axios":"7rA65","../../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"hBb5s"}],"3xBbr":[function(require,module,exports) {
+},{"react":"3b2NM","prop-types":"4dfy5","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","axios":"7rA65","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"3xBbr":[function(require,module,exports) {
 "use strict";
-var helpers = require("../../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
 helpers.prelude(module);
@@ -43885,9 +43702,9 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","axios":"7rA65","prop-types":"4dfy5","react-router-dom":"1PMSK","react-bootstrap/Button":"1ru0l","../../actions/actions":"5S6cN","../../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"hBb5s"}],"7gvH2":[function(require,module,exports) {
+},{"react":"3b2NM","axios":"7rA65","prop-types":"4dfy5","react-router-dom":"1PMSK","react-bootstrap/Button":"1ru0l","../../actions/actions":"5S6cN","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"7gvH2":[function(require,module,exports) {
 "use strict";
-var helpers = require("../../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
 helpers.prelude(module);
@@ -44096,9 +43913,9 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","prop-types":"4dfy5","axios":"7rA65","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","../../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"hBb5s"}],"7HF27":[function(require,module,exports) {
+},{"react":"3b2NM","prop-types":"4dfy5","axios":"7rA65","react-bootstrap/Form":"6A5ko","react-bootstrap/Button":"1ru0l","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"7HF27":[function(require,module,exports) {
 "use strict";
-var helpers = require("../../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
 helpers.prelude(module);
@@ -44312,9 +44129,9 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","prop-types":"4dfy5","react-router-dom":"1PMSK","react-bootstrap/Button":"1ru0l","react-bootstrap/Card":"1CZWQ","../../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"hBb5s"}],"6FLqj":[function(require,module,exports) {
+},{"react":"3b2NM","prop-types":"4dfy5","react-router-dom":"1PMSK","react-bootstrap/Button":"1ru0l","react-bootstrap/Card":"1CZWQ","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"6FLqj":[function(require,module,exports) {
 "use strict";
-var helpers = require("../../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
 helpers.prelude(module);
@@ -44515,9 +44332,9 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","prop-types":"4dfy5","react-router-dom":"1PMSK","react-bootstrap/Container":"3Mt3t","react-bootstrap/Card":"1CZWQ","react-bootstrap/Button":"1ru0l","../../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"hBb5s"}],"3CncI":[function(require,module,exports) {
+},{"react":"3b2NM","prop-types":"4dfy5","react-router-dom":"1PMSK","react-bootstrap/Container":"3Mt3t","react-bootstrap/Card":"1CZWQ","react-bootstrap/Button":"1ru0l","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"3CncI":[function(require,module,exports) {
 "use strict";
-var helpers = require("../../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
+var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
 helpers.prelude(module);
@@ -44982,7 +44799,7 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","prop-types":"4dfy5","axios":"7rA65","react-router-dom":"1PMSK","react-redux":"7GDa4","react-bootstrap":"4n7hB","../../../../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"hBb5s"}],"4n7hB":[function(require,module,exports) {
+},{"react":"3b2NM","prop-types":"4dfy5","axios":"7rA65","react-router-dom":"1PMSK","react-redux":"7GDa4","react-bootstrap":"4n7hB","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"4n7hB":[function(require,module,exports) {
 "use strict";
 
 var _interopRequireWildcard = require("@babel/runtime/helpers/interopRequireWildcard");
@@ -50733,6 +50550,6 @@ var moviesApp = (0, _redux.combineReducers)({
 var _default = moviesApp;
 exports["default"] = _default;
 
-},{"redux":"7panR","../actions/actions":"5S6cN"}],"5iJih":[function() {},{}]},["1j6wU","68WUB","1DVjT"], "1DVjT", "parcelRequire427e")
+},{"redux":"7panR","../actions/actions":"5S6cN"}],"5iJih":[function() {},{}]},["1j6wU","771Ba","1DVjT"], "1DVjT", "parcelRequire427e")
 
 //# sourceMappingURL=index.02675e63.js.map
