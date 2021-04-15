@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
 import axios from 'axios';
 
 
@@ -32,9 +30,6 @@ export function LoginView(props) {
     };
 
     return (
-        <Container> 
-            <Row>
-                <h3> Welcome to MyBrary</h3>
         <Form>
             <Form.Group controlId="formUsername">
                 <Form.Label>Username:</Form.Label>
@@ -52,7 +47,5 @@ export function LoginView(props) {
                 Register
           </Button>
         </Form>
-        </Row>
-        </Container>
     );
 }
