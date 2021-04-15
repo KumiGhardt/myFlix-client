@@ -29672,13 +29672,6 @@ try {
         // destructure
         var _this$state = this.state, selectedMovie = _this$state.selectedMovie, register = _this$state.register;
         /*If there is no user, the LoginView is rendered. If there is a user logged in, the user details are *passed as a prop to the LoginView*/
-        if (!user) return (
-          /*#__PURE__*/_react["default"].createElement(_loginView.LoginView, {
-            onLoggedIn: function onLoggedIn(user) {
-              return _this3.onLoggedIn(user);
-            }
-          })
-        );
         if (window.location.pathname === '/login') {
           if (!user) {
             return (
