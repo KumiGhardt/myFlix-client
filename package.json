@@ -1,9 +1,9 @@
 {
     "dependencies": {
+        "@babel/core": "^7.13.15",
         "@babel/preset-react": "^7.13.13",
         "@parcel/transformer-sass": "^2.0.0-nightly.636",
         "axios": "^0.21.1",
-        "babel-core": "^6.26.3",
         "babel-plugin-transform-class-properties": "^6.24.1",
         "bootstrap": "^4.6.0",
         "eslint": "^7.23.0",
@@ -27,7 +27,6 @@
         "@babel/preset-env": "^7.13.15",
         "@babel/preset-react": "^7.13.13",
         "@parcel/transformer-sass": "^2.0.0-nightly.636",
-        "babel-core": "^6.26.3",
         "babel-plugin-transform-class-properties": "^6.24.1",
         "parcel-bundler": "^1.12.5",
         "sass": "^1.32.8"
