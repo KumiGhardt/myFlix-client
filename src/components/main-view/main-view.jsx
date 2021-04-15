@@ -122,7 +122,8 @@ export class MainView extends React.Component {
     //destructure
     const { selectedMovie, register } = this.state;
 
-    /* If there is no user, the LoginView is rendered. If there is a user logged in, the user details are *passed as a prop to the LoginView*/    
+    /* If there is no user, the LoginView is rendered. If there is a user logged in, the user details are *passed as a prop to the LoginView*/
+    //if (!user) return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
     if(window.location.pathname === '/login') {
       if(!user) {
       return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
@@ -137,7 +138,14 @@ export class MainView extends React.Component {
     return (
       <Container>
         <Router>
-        
+        <Row className="main-view">
+          <Route exact path="/register" render={() => <RegistrationView />} />
+
+            <Route exact path="/" render={() => {
+              if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
+              return <MoviesList movies={movies} />;
+            }} />
+          
           <Navbar>
             <Navbar.Brand href="/">Home</Navbar.Brand>
             <Navbar.Toggle />
@@ -148,16 +156,8 @@ export class MainView extends React.Component {
               <Button onClick={() => this.logOut()} variant="secondary">Log Out</Button>
             </Navbar.Collapse>
           </Navbar>
-
-          {/* movies */}
           
-          <Row className="main-view">
-          <Route exact path="/register" render={() => <RegistrationView />} />
-
-            <Route exact path="/" render={() => {
-              if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} />;
-              return <MoviesList movies={movies} />;
-            }} />
+         
             
             <Route path="/movies/:movieId" render={({ match }) => <MovieView movie={movies.find(m => m._id === match.params.movieId)} />} />
 

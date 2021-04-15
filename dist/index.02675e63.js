@@ -29672,6 +29672,7 @@ try {
         // destructure
         var _this$state = this.state, selectedMovie = _this$state.selectedMovie, register = _this$state.register;
         /*If there is no user, the LoginView is rendered. If there is a user logged in, the user details are *passed as a prop to the LoginView*/
+        // if (!user) return <LoginView onLoggedIn={(user) => this.onLoggedIn(user)} />
         if (window.location.pathname === '/login') {
           if (!user) {
             return (
@@ -29695,20 +29696,7 @@ try {
           );
         }
         return (
-          /*#__PURE__*/_react["default"].createElement(_Container["default"], null, /*#__PURE__*/_react["default"].createElement(_reactRouterDom.BrowserRouter, null, /*#__PURE__*/_react["default"].createElement(_Navbar["default"], null, /*#__PURE__*/_react["default"].createElement(_Navbar["default"].Brand, {
-            href: "/"
-          }, "Home"), /*#__PURE__*/_react["default"].createElement(_Navbar["default"].Toggle, null), /*#__PURE__*/_react["default"].createElement(_Navbar["default"].Collapse, {
-            className: "justify-content-end"
-          }, /*#__PURE__*/_react["default"].createElement(_Nav["default"], {
-            className: "justify-content-end"
-          }, /*#__PURE__*/_react["default"].createElement(_Nav["default"].Link, {
-            href: ("/users/").concat(user.Username)
-          }, "My Account")), /*#__PURE__*/_react["default"].createElement(_Button["default"], {
-            onClick: function onClick() {
-              return _this3.logOut();
-            },
-            variant: "secondary"
-          }, "Log Out"))), /*#__PURE__*/_react["default"].createElement(_Row["default"], {
+          /*#__PURE__*/_react["default"].createElement(_Container["default"], null, /*#__PURE__*/_react["default"].createElement(_reactRouterDom.BrowserRouter, null, /*#__PURE__*/_react["default"].createElement(_Row["default"], {
             className: "main-view"
           }, /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Route, {
             exact: true,
@@ -29735,7 +29723,20 @@ try {
                 })
               );
             }
-          }), /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Route, {
+          }), /*#__PURE__*/_react["default"].createElement(_Navbar["default"], null, /*#__PURE__*/_react["default"].createElement(_Navbar["default"].Brand, {
+            href: "/"
+          }, "Home"), /*#__PURE__*/_react["default"].createElement(_Navbar["default"].Toggle, null), /*#__PURE__*/_react["default"].createElement(_Navbar["default"].Collapse, {
+            className: "justify-content-end"
+          }, /*#__PURE__*/_react["default"].createElement(_Nav["default"], {
+            className: "justify-content-end"
+          }, /*#__PURE__*/_react["default"].createElement(_Nav["default"].Link, {
+            href: ("/users/").concat(user.Username)
+          }, "My Account")), /*#__PURE__*/_react["default"].createElement(_Button["default"], {
+            onClick: function onClick() {
+              return _this3.logOut();
+            },
+            variant: "secondary"
+          }, "Log Out"))), /*#__PURE__*/_react["default"].createElement(_reactRouterDom.Route, {
             path: "/movies/:movieId",
             render: function render(_ref) {
               var match = _ref.match;
@@ -42720,6 +42721,9 @@ try {
   var _react = _interopRequireDefault(require("react"));
   var _reactRedux = require("react-redux");
   var _Row = _interopRequireDefault(require("react-bootstrap/Row"));
+  var _Nav = _interopRequireDefault(require("react-bootstrap/Nav"));
+  var _Navbar = _interopRequireDefault(require("react-bootstrap/Navbar"));
+  var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
   var _visibilityFilterInput = _interopRequireDefault(require("../visibility-filter-input/visibility-filter-input"));
   var _movieCard = require("../movie-card/movie-card");
   function _interopRequireDefault(obj) {
@@ -42772,7 +42776,7 @@ try {
   window.$RefreshSig$ = prevRefreshSig;
 }
 
-},{"react":"3b2NM","react-redux":"7GDa4","react-bootstrap/Row":"3fzwD","../visibility-filter-input/visibility-filter-input":"3SRLP","../movie-card/movie-card":"7v6h3","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f"}],"3SRLP":[function(require,module,exports) {
+},{"react":"3b2NM","react-redux":"7GDa4","react-bootstrap/Row":"3fzwD","../visibility-filter-input/visibility-filter-input":"3SRLP","../movie-card/movie-card":"7v6h3","../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"4Jj4f","react-bootstrap/Nav":"3T3v1","react-bootstrap/Navbar":"3qLFd","react-bootstrap/Button":"1ru0l"}],"3SRLP":[function(require,module,exports) {
 "use strict";
 var helpers = require("../../../node_modules/@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
